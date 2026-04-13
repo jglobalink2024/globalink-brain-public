@@ -46,3 +46,33 @@ Never log api_key. Never return in responses.
 ## Vendor Fetch Timeout
 All vendor API calls must have 30-second AbortController timeout.
 Hung API hangs entire execution without timeout.
+
+## Stripe Env Var Naming (LOCKED 260413)
+One canonical name per price ID. No fallback aliases.
+STRIPE_FM_PRICE_ID | STRIPE_PRO_PRICE_ID |
+STRIPE_SOLO_PRICE_ID | STRIPE_PRICE_STUDIO |
+STRIPE_PRICE_AGENCY
+Never add || fallback aliases — they cause silent failures.
+
+## Fail-Safe Not Fail-Open (Stripe)
+Unknown price ID → default to 'free' not 'pro'.
+Billing errors should deny access, not grant it.
+
+## Rate Limiter Pattern (Serverless)
+In-memory rate limiters reset on cold start.
+Use Supabase audit_ledger count query for rate limiting
+in serverless environments. Counts events in time window.
+Replace with Upstash Redis before horizontal scale.
+
+## system_prompt Redaction Pattern
+Never store full system_prompt in task_executions.
+Store: system_prompt_hash (SHA-256) + system_prompt_length.
+Workspace DNA and agent instructions are sensitive.
+
+## Agent Fuzzy Matching (Canvas)
+4-tier matching for canvas step agent assignment:
+1. Exact display_name match
+2. Case-insensitive includes
+3. agent_type match
+4. null (show warning, do not silently fail)
+Never silently leave a step unassigned.

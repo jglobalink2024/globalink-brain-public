@@ -41,3 +41,29 @@ Rationale: Renewal conversation framing built into product.
 Decision: Builds framed by phase+function, never calendar
 Rationale: Jason completes "week-long" items in hours.
   Time estimates are suggestions only. Train to standard.
+
+## 260413 — Stripe price ID canonical names locked
+Decision: One env var name per price ID. No aliases.
+  STRIPE_FM_PRICE_ID, STRIPE_PRO_PRICE_ID,
+  STRIPE_SOLO_PRICE_ID, STRIPE_PRICE_STUDIO,
+  STRIPE_PRICE_AGENCY
+Rationale: Legacy aliases removed in c30ad1a.
+  Dual names caused silent failures.
+
+## 260413 — FM cap race condition: Option B
+Decision: Document known race, manual check after purchase.
+Rationale: 25-seat cap makes simultaneous purchase
+  probability near-zero. Redis lock is over-engineering
+  for this volume. Review if cohort fills fast.
+
+## 260413 — system_prompt redacted from DB
+Decision: Store hash + length, not full prompt.
+Rationale: Workspace DNA + API patterns in plaintext
+  in task_executions was a security gap. Hash preserves
+  auditability without storing sensitive content.
+
+## 260413 — Gemini vendor status: pending not null
+Decision: Gemini/cursor/custom vendors return pending
+  status rather than null. UI shows "coming soon."
+Rationale: Returning null silently made Sandra think
+  her Gemini agent was working when it wasn't.
