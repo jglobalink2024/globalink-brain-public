@@ -31,33 +31,54 @@ Phase 3: NOT STARTED (gate: first paying customer)
 2.Y RevOps Canvas Templates
 2.9 ROI Tracker
 
-## Active Fixes (from audit 260413)
-- Critical: "Run in [Agent]" button dead (StepDetailSidebar:551)
-- Critical: ROI tracker inflated baseline
-- Critical: Smart suggestions wrong fallback
-- High: Two auto-handoff implementations (deduplicate)
-- High: No vendor fetch timeout
-- High: MCP endpoint_url column missing
-- High: MCP plan caps inconsistent
-- High: API keys written client-side
+## Fixes Shipped (260413)
+Wave 1 (bcaa350) — 8 critical fixes:
+- Canvas "Run in [Agent]" button — FIXED
+- ROI adaptive baseline + credibility cap — FIXED
+- Smart suggestions null fallback — FIXED
+- Auto-handoff deduplicated — FIXED
+- Vendor fetch 30s timeout — FIXED
+- MCP endpoint_url migration — FIXED
+- MCP plan caps matched to planGate — FIXED
+- API keys through server route — FIXED
+
+Wave 2 (Session U) — 14 high fixes: IN FLIGHT
+Wave 3 (Session V) — full polish pass: IN FLIGHT
+
+## Next Session Priorities
+1. Confirm Session U + V landed clean
+2. Upload updated POINTER files to Claude.ai projects
+3. Apply pending Supabase migrations
+4. Add Vercel env vars (Google + HubSpot + Stripe FM)
+5. Send Eric beta invite
+6. Symphony v9 — waiting on spec v1
 
 ## Pending Manual Steps
 ### Supabase SQL Editor (apply in order):
-All 15 April 13 migrations — see R5 audit for full list
-Plus: MCP endpoint_url migration (from Fix 6 above)
+20260413120001_phase2_3_task_chain.sql
+20260413120002_phase2_5_skills_enforcement.sql
+20260413000000_canvas_task_bridge.sql
+20260413210000_workspace_dna.sql
+20260413300000_stripe_billing.sql
+20260413400000_semantic_matchmaking.sql
+20260413500000_google_oauth.sql
+20260413600000_canvas_templates.sql
+20260413600001_roi_tracker.sql
+20260413700000_hubspot_oauth.sql
+20260413220000_mcp_endpoint_url.sql
 
 ### Vercel Env Vars Needed:
 STRIPE_FM_PRICE_ID
 GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_SECRET
-GOOGLE_REDIRECT_URI
+GOOGLE_REDIRECT_URI=https://app.command.globalinkservices.io/api/integrations/google/callback
 HUBSPOT_CLIENT_ID
 HUBSPOT_CLIENT_SECRET
-HUBSPOT_REDIRECT_URI
+HUBSPOT_REDIRECT_URI=https://app.command.globalinkservices.io/api/integrations/hubspot/callback
 
 ### Third-Party Setup Needed:
-- Google Cloud Console: OAuth 2.0 app, 3 scopes, redirect URI
-- HubSpot Developers: Public app, 5 scopes, redirect URI
+- Google Cloud Console: OAuth 2.0 client, 3 scopes
+- HubSpot Developers: Public app, 5 scopes
 
 ## FM Cohort
 25 slots | $99/mo | Closes Sep 30 2026
