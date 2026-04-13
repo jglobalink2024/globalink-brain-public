@@ -1,12 +1,33 @@
 # GlobaLink Brain — COMMAND Project
+# Add this file to Claude.ai project knowledge.
+# Claude fetches these URLs at session start automatically.
 
-Fetch before every non-trivial session:
+## Fetch before every non-trivial session:
 
-State: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/state.md
-Decisions: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/decisions.md
-Research: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/research.md
-Patterns: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/patterns.md
-Killed: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/killed.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/state.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/decisions.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/patterns.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/killed.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/research.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/principles.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/decisions.md
 
-Company entities: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/entities.md
-Company principles: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/principles.md
+## Session type guidance:
+
+BUILD SESSION — fetch: state.md, patterns.md, killed.md
+STRATEGY SESSION — fetch: state.md, decisions.md, research.md
+GTM SESSION — fetch: state.md, decisions.md + paste gl/entities.md
+  (entities.md is private — Jason pastes it manually)
+COMPETITIVE SESSION — fetch: research.md, killed.md
+PATENT SESSION — fetch: killed.md, decisions.md, research.md
+
+## Brain location (local):
+C:\Users\jdavi\OneDrive\Desktop\GlobalInk Repos\globalink-brain\
+
+## Private repo (CC writes here):
+https://github.com/jglobalink2024/globalink-brain
+
+## Public mirror (Claude.ai reads here):
+https://github.com/jglobalink2024/globalink-brain-public
+
+## Sync: automatic after every push (~16 seconds)

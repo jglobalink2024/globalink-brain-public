@@ -1,12 +1,14 @@
 # GlobaLink Brain — Ponte Project
+# Add this file to Claude.ai Ponte project knowledge.
 
-Fetch before every non-trivial session:
+## Fetch before every non-trivial session:
 
-State: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/ponte/state.md
-Decisions: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/ponte/decisions.md
-Research: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/ponte/research.md
-Patterns: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/ponte/patterns.md
-Killed: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/ponte/killed.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/ponte/state.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/principles.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/decisions.md
 
-Company entities: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/entities.md
-Company principles: https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/principles.md
+## Hard wall: Ponte is separate from COMMAND, Traverse, Phase Line.
+## Never commingle entities or decisions across projects.
+
+## Brain location (local):
+C:\Users\jdavi\OneDrive\Desktop\GlobalInk Repos\globalink-brain\
