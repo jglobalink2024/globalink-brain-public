@@ -1,2 +1,14 @@
-# globalink-brain-public
-GlobaLink Brain — public read mirror. Auto-synced from private brain. Claude.ai reads this for session context.
+# GlobaLink Brain — Public Mirror
+
+Auto-synced from private brain after every commit.
+Last sync: 2026-04-13 21:50 UTC
+
+## What's here
+- command/ — COMMAND app build state and decisions
+- gl/ — GlobaLink operating principles
+- ponte/ traverse/ phase-line/ — project placeholders
+- POINTER_*.md — session context pointers for Claude.ai
+
+## What's NOT here
+- gl/entities.md — prospect data (private only)
+- Any credentials or personal contact details
