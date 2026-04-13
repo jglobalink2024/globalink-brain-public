@@ -39,16 +39,16 @@ Wave 3 (7400009): 14 high — DONE
 Total fixes: 38 across 3 sessions
 
 ## Pending Manual Steps
-### Supabase SQL Editor — apply these:
-20260413900000_task_executions_redact_prompt.sql
-(+ all 15 April 13 migrations if not yet applied)
+### Supabase SQL Editor — DONE 260413:
+20260413900000_task_executions_redact_prompt.sql ✓
+(+ all 15 April 13 migrations applied)
 
-### Vercel Env Vars — verify canonical names:
-STRIPE_FM_PRICE_ID (not STRIPE_PRICE_FM)
-STRIPE_PRO_PRICE_ID (not STRIPE_PRICE_PRO)
-STRIPE_SOLO_PRICE_ID — get from Stripe Dashboard
-STRIPE_PRICE_STUDIO — create Studio product in Stripe
-STRIPE_PRICE_AGENCY — create Agency product in Stripe
+### Vercel Env Vars — DONE 260413 (all 5 price IDs confirmed):
+STRIPE_FM_PRICE_ID ✓
+STRIPE_PRO_PRICE_ID ✓
+STRIPE_SOLO_PRICE_ID ✓
+STRIPE_PRICE_STUDIO ✓
+STRIPE_PRICE_AGENCY ✓
 GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_SECRET
 GOOGLE_REDIRECT_URI
@@ -64,8 +64,6 @@ HUBSPOT_REDIRECT_URI
 1. Symphony v9 results → fix any 🔴 CRITICAL findings
 2. Send Eric beta invite (Phase 2 complete, ready now)
 3. Grant Carlson 7-day follow-up (check date)
-4. Apply pending Supabase migration above
-5. Add missing Stripe price IDs to Vercel
 
 ## FM Cohort
 25 slots | $99/mo | Closes Sep 30 2026
