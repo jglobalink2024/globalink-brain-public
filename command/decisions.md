@@ -70,13 +70,14 @@ Decision: Builds framed by phase+function, never calendar
 Rationale: Jason completes "week-long" items in hours.
   Time estimates are suggestions only. Train to standard.
 
-## 260413 — Stripe price ID canonical names locked
-Decision: One env var name per price ID. No aliases.
+## 260413 — Stripe price ID canonical names locked (UPDATED v9.5)
+Decision: One env var name per price ID. No aliases. All follow STRIPE_{TIER}_PRICE_ID.
   STRIPE_FM_PRICE_ID, STRIPE_PRO_PRICE_ID,
-  STRIPE_SOLO_PRICE_ID, STRIPE_PRICE_STUDIO,
-  STRIPE_PRICE_AGENCY
-Rationale: Legacy aliases removed in c30ad1a.
-  Dual names caused silent failures.
+  STRIPE_SOLO_PRICE_ID, STRIPE_STUDIO_PRICE_ID,
+  STRIPE_AGENCY_PRICE_ID
+Rationale: Legacy aliases removed in c30ad1a. STRIPE_PRICE_STUDIO
+  and STRIPE_PRICE_AGENCY renamed to match convention in 8635e83.
+  ACTION: Update Vercel env vars to match new names.
 
 ## 260413 — FM cap race condition: Option B
 Decision: Document known race, manual check after purchase.

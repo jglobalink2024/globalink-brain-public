@@ -47,12 +47,14 @@ Never log api_key. Never return in responses.
 All vendor API calls must have 30-second AbortController timeout.
 Hung API hangs entire execution without timeout.
 
-## Stripe Env Var Naming (LOCKED 260413)
+## Stripe Env Var Naming (LOCKED 260413, UPDATED v9.5)
 One canonical name per price ID. No fallback aliases.
+All follow STRIPE_{TIER}_PRICE_ID convention:
 STRIPE_FM_PRICE_ID | STRIPE_PRO_PRICE_ID |
-STRIPE_SOLO_PRICE_ID | STRIPE_PRICE_STUDIO |
-STRIPE_PRICE_AGENCY
+STRIPE_SOLO_PRICE_ID | STRIPE_STUDIO_PRICE_ID |
+STRIPE_AGENCY_PRICE_ID
 Never add || fallback aliases — they cause silent failures.
+Old names STRIPE_PRICE_STUDIO / STRIPE_PRICE_AGENCY retired in 8635e83.
 
 ## Fail-Safe Not Fail-Open (Stripe)
 Unknown price ID → default to 'free' not 'pro'.
