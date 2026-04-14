@@ -86,3 +86,4 @@ Date = chat creation date (ask Jason if unsure)
 Example: [GL | COMMAND | Phase 2 Sprint · Audit · Brain Init · 260413]
 Never name a chat based only on the opening question.
 Review the full conversation before naming.
+Always suggest a thread name when the session is closing out.
