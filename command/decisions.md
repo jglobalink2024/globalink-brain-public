@@ -1,5 +1,10 @@
 # COMMAND — Decisions Register
-Last updated: 260413
+Last updated: 260413-2
+
+## 260413 — Pooled keys, no new schema columns
+Decision: Reuse existing anthropic_api_key / openai_api_key / perplexity_api_key columns as BYOK columns; no migration
+Rationale: Columns already existed with correct names. Adding user_anthropic_key etc. would have been redundant duplication.
+Pattern: workspace key ?? env var — one line per vendor in proxy route.
 
 ## 260413 — Skills Enforcement KEPT
 Decision: Rejected Gemini kill recommendation

@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260413
+Last updated: 260413-2
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -14,7 +14,7 @@ Phase 2: COMPLETE — all 15 sub-phases + all audit
   fixes shipped. Product is audit-clean.
 Phase 3: NOT STARTED (gate: first paying customer)
 
-## Commits Today (260413)
+## Commits (260413 — session 2)
 a8e0412 Phase 2.1 real agent connections
 0366c0f Phase 2.3 auto-handoff
 ddd7364 Phase 2.4 router execution
@@ -60,10 +60,34 @@ HUBSPOT_REDIRECT_URI
 - Google Cloud Console: OAuth 2.0 client + 3 scopes
 - HubSpot Developers: Public app + 5 scopes
 
+## Symphony v9 Cleanup — COMPLETE (ed34843, 260413)
+Session: COMMAND | QA | Symphony v9 Cleanup | 260413
+34 findings total. 19 false positives (stale deploy). 15 real.
+Code fixes: 5 shipped. Batch verify: 12 VERIFIED. Jason handles env vars.
+
+Fixed:
+- ST-09: double-execution guard covers running + complete (409)
+- BF3: per-step export warning in CompletionPanel (amber confirm UI)
+- MJ3: pricing page moved to app/(app)/pricing + AppLayout wrapper
+- MJ2: lib/executeTask.ts → lib/pipeline/executeTask.ts (6 refs in Product Spec)
+- BF1: Product Spec Semantic Matchmaking updated — "3-signal" claim removed, Phase 3 noted
+
+Verified (no changes needed):
+C1, MJ1, B2, M5, M7, L5, M10, M12, L1, L2, L4, L7 — all confirmed in code
+
+## API Key Architecture (260413-2) — SHIPPED
+Commit: a50ffa4
+- Proxy route: pooled env-var keys as default fallback (ANTHROPIC_API_KEY, OPENAI_API_KEY, PERPLEXITY_API_KEY)
+- Workspace key still takes priority when set (BYOK path unchanged)
+- Onboarding: API key screen removed entirely; agents provisioned api_proxy on first run
+- Integrations page: "YOUR API KEYS (OPTIONAL)" — green "Using COMMAND keys" / violet "Using your key" mode badges
+- No schema migration required — existing anthropic_api_key / openai_api_key / perplexity_api_key columns reused as BYOK columns
+- TODO in proxy route: rate limit pooled key usage by plan tier (Phase 3)
+
 ## Next Session Priorities
-1. Symphony v9 results → fix any 🔴 CRITICAL findings
-2. Send Eric beta invite (Phase 2 complete, ready now)
-3. Grant Carlson 7-day follow-up (check date)
+1. Send Eric beta invite (Phase 2 + audit-clean, ready now)
+2. Grant Carlson 7-day follow-up (check date)
+3. Google OAuth env vars — GOOGLE_CLIENT_ID/SECRET/REDIRECT_URI still needed in Vercel
 
 ## FM Cohort
 25 slots | $99/mo | Closes Sep 30 2026
