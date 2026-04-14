@@ -76,3 +76,13 @@ Workspace DNA and agent instructions are sensitive.
 3. agent_type match
 4. null (show warning, do not silently fail)
 Never silently leave a step unassigned.
+
+## Chat Naming Convention (LOCKED 260413)
+Name every Claude.ai chat based on the ENTIRETY of the
+conversation — not just the opening topic.
+Format: [GL | WORKSTREAM | Topic · Topic · Topic | YYMMDD]
+Multiple topics separated by ·
+Date = chat creation date (ask Jason if unsure)
+Example: [GL | COMMAND | Phase 2 Sprint · Audit · Brain Init · 260413]
+Never name a chat based only on the opening question.
+Review the full conversation before naming.
