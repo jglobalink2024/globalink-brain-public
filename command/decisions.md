@@ -1,5 +1,28 @@
 # COMMAND — Decisions Register
-Last updated: 260413-2
+Last updated: 260413-4
+
+## 260413 — Ops-watchdog run logs committed to git (not local-only)
+Decision: Write run logs to docs/ops/ inside the repo, committed after every run.
+Rationale: Persistent memory that survives machine changes, visible in git history,
+  queryable by the agent for trend detection. Local-only would break on new machine.
+Pattern: daily auto-commit via scheduled task — "ops: daily run YYYY-MM-DD — GREEN/YELLOW/RED"
+
+## 260413 — Self-patch via GitHub PR (not auto-apply)
+Decision: Agent proposes changes to its own definition as GitHub PRs, Jason merges.
+Rationale: Agent can open a PR (GitHub MCP available) but should not rewrite its own
+  instructions without human review. PRs preserve the decision trail in git.
+Branch pattern: ops/watchdog-self-patch-YYYYMMDD
+
+## 260413 — Schema baseline bootstrapped on first run (not hand-coded)
+Decision: schema-baseline.json starts as a template with bootstrapped: false.
+  First /ops-check populates it from live Supabase + filesystem + planGate.ts.
+Rationale: Hand-coding the table list would go stale immediately. Live bootstrap
+  captures actual state. Subsequent runs detect drift against that snapshot.
+
+## 260413 — Ops agent lives in command-app git (not global ~/.claude)
+Decision: .claude/agents/ops-watchdog.md in the repo, not the user's global agents dir.
+Rationale: Agent must grow with the product. Global agents don't have product context
+  and don't get committed alongside the code they monitor. Repo-local = version-controlled.
 
 ## 260413 — Pooled keys, no new schema columns
 Decision: Reuse existing anthropic_api_key / openai_api_key / perplexity_api_key columns as BYOK columns; no migration

@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260413-2
+Last updated: 260413-4
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -47,8 +47,8 @@ Total fixes: 38 across 3 sessions
 STRIPE_FM_PRICE_ID ✓
 STRIPE_PRO_PRICE_ID ✓
 STRIPE_SOLO_PRICE_ID ✓
-STRIPE_PRICE_STUDIO ✓
-STRIPE_PRICE_AGENCY ✓
+STRIPE_STUDIO_PRICE_ID ✓ (was STRIPE_PRICE_STUDIO, renamed 8635e83)
+STRIPE_AGENCY_PRICE_ID ✓ (was STRIPE_PRICE_AGENCY, renamed 8635e83)
 GOOGLE_CLIENT_ID
 GOOGLE_CLIENT_SECRET
 GOOGLE_REDIRECT_URI
@@ -75,6 +75,25 @@ Fixed:
 Verified (no changes needed):
 C1, MJ1, B2, M5, M7, L5, M10, M12, L1, L2, L4, L7 — all confirmed in code
 
+## Symphony v9.5 Full Re-Run — COMPLETE (8635e83, 260413)
+Session: COMMAND | QA | Symphony v9.5 Full Re-Run | 260413
+Full randomized re-run against live deploy (v9 ran against stale build).
+56 personas tested. Live Playwright browser verification + local dev server.
+Commit: 8635e83 (12 files changed, 2202 insertions)
+
+Results:
+- TypeScript: exit 0
+- Playwright: 56 passed, 11 skipped, 4 did not run (exit 0, 1.2h)
+- Primary ICP 93% at 8+ purchase intent (TARGET MET)
+- All personas 91% at 7+ (NEAR MISS by 1 — E9 Jenna at 6)
+- Truth score: ~96% | Regression: 96.2% | Interaction: 6/7 PASS
+- Zero new CRITICALs
+- Fix queue: P0=0, P1=3 (M10, N2, N5), P2=3, P3=3
+
+10 reports in tests/personas/. Feature file updated with v9.5 verdicts.
+Also shipped: STRIPE_PRICE_STUDIO → STRIPE_STUDIO_PRICE_ID,
+  STRIPE_PRICE_AGENCY → STRIPE_AGENCY_PRICE_ID (env var standardization).
+
 ## API Key Architecture (260413-2) — SHIPPED
 Commit: a50ffa4
 - Proxy route: pooled env-var keys as default fallback (ANTHROPIC_API_KEY, OPENAI_API_KEY, PERPLEXITY_API_KEY)
@@ -83,6 +102,34 @@ Commit: a50ffa4
 - Integrations page: "YOUR API KEYS (OPTIONAL)" — green "Using COMMAND keys" / violet "Using your key" mode badges
 - No schema migration required — existing anthropic_api_key / openai_api_key / perplexity_api_key columns reused as BYOK columns
 - TODO in proxy route: rate limit pooled key usage by plan tier (Phase 3)
+
+## Ops Watchdog (260413 — session 4)
+Built self-learning production diagnostic agent. Replaces 7-layer manual ops playbook.
+Commits: 253e633 (v1), b03582e (v2), 0a44554 (cleanup command)
+
+Architecture:
+- .claude/agents/ops-watchdog.md — agent definition (in git, self-patches via PR)
+- .mcp.json — Vercel + Supabase + GitHub MCP servers wired
+- .claude/commands/ops-*.md — 7 focused commands
+- .claude/settings.json — PostToolUse push reminder hook
+- docs/ops/schema-baseline.json — bootstraps from live system on first run
+- docs/ops/*.md — run logs written after every /ops-check
+
+9 checks: Vercel deploy health, runtime errors (24h, with deltas), Supabase schema
+vs baseline, audit ledger anomalies, vendor API status, credit/plan gates, rate
+limit pressure, canary HTTP probes (live app verification), codebase drift detection.
+
+Self-learning: every run writes a log; next run computes deltas vs prior run.
+Self-improving: agent opens GitHub self-patch PRs when it finds uncovered patterns.
+Schema baseline: auto-bootstrapped on first run from Supabase + filesystem + planGate.ts.
+Daily scheduled: 7:01 AM every day via Claude Code scheduled tasks.
+Pre-onboarding gate: /ops-beta-ready (12-point GO/NO-GO checklist).
+Weekly digest: /ops-week (reads last 7 run logs for trend summary).
+Cleanup: /ops-cleanup (prunes logs >30 days, keeps weekly anchors + RED + permanent records).
+
+Tokens: VERCEL_API_TOKEN + GITHUB_TOKEN confirmed in .env.local. SUPABASE_SERVICE_ROLE_KEY already present.
+First bootstrap: runs tonight at 7:01 AM. schema-baseline.json will be populated.
+ACTION: Click "Run now" in Scheduled sidebar to pre-approve tool permissions before first auto-run.
 
 ## Claude Code Tooling (260413 — session 3)
 Implemented all recommendations from /insights report (177 sessions, Apr 3-14):

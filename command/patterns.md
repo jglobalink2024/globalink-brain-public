@@ -1,5 +1,5 @@
 # COMMAND — Build Patterns
-Last updated: 260413
+Last updated: 260413-4
 
 ## Concurrent CC Sessions
 Safe when file surfaces confirmed non-overlapping.
@@ -76,6 +76,32 @@ Workspace DNA and agent instructions are sensitive.
 3. agent_type match
 4. null (show warning, do not silently fail)
 Never silently leave a step unassigned.
+
+## Self-Learning Agent Pattern
+Agent definitions live in .claude/agents/ inside the repo (not global ~/.claude/agents).
+This makes them version-controlled, product-specific, and auto-loadable.
+Bootstrap pattern: agent reads a JSON baseline on first run, populates it from live data,
+  uses it for drift detection on every subsequent run.
+Self-patch pattern: agent opens GitHub PRs to propose changes to its own definition.
+  Never auto-applies changes to itself without human review.
+
+## Ops Run Log Pattern
+Diagnostic agents write structured run logs to docs/ops/YYYY-MM-DD-HH-MM.md.
+Each log has YAML frontmatter with key metrics for machine-readable trend extraction.
+Committed to git automatically after each run — creates a durable history.
+Cleanup rule: prune logs >30 days, keep weekly anchors + RED-health runs + permanent records.
+Scheduled: daily at 7:01 AM via Claude Code scheduled tasks.
+
+## Canary Probe Pattern
+Don't rely on Vercel "READY" status alone — make real HTTP requests to production.
+Three probes: health endpoint (200 + latency), auth rejection (expects 401 not 200),
+  primary feature route (500 = crisis). Live proof the app is serving, not just deployed.
+
+## Codebase Drift Detection Pattern
+Read filesystem (app/api/) at runtime and compare against a stored baseline.
+New routes not in baseline = uncovered monitoring gap → queue for self-patch.
+Removed routes still in baseline = dead checks → flag and remove.
+Always compare local vs production commit SHA — catches silent deploy failures.
 
 ## Chat Naming Convention (LOCKED 260413)
 Name every Claude.ai chat based on the ENTIRETY of the
