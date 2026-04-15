@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260415
+Last updated: 260415-2
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -43,22 +43,29 @@ Total fixes: 38 across 3 sessions
 20260413900000_task_executions_redact_prompt.sql ✓
 (+ all 15 April 13 migrations applied)
 
-### Vercel Env Vars — DONE 260413 (all 5 price IDs confirmed):
+### Vercel Env Vars — ALL DONE (260415-2):
 STRIPE_FM_PRICE_ID ✓
 STRIPE_PRO_PRICE_ID ✓
 STRIPE_SOLO_PRICE_ID ✓
 STRIPE_STUDIO_PRICE_ID ✓ (was STRIPE_PRICE_STUDIO, renamed 8635e83)
 STRIPE_AGENCY_PRICE_ID ✓ (was STRIPE_PRICE_AGENCY, renamed 8635e83)
-GOOGLE_CLIENT_ID
-GOOGLE_CLIENT_SECRET
-GOOGLE_REDIRECT_URI
-HUBSPOT_CLIENT_ID
-HUBSPOT_CLIENT_SECRET
-HUBSPOT_REDIRECT_URI
+GOOGLE_CLIENT_ID ✓ (added 260413)
+GOOGLE_CLIENT_SECRET ✓ (added 260413)
+GOOGLE_REDIRECT_URI ✓ (added 260413)
+HUBSPOT_CLIENT_ID ✓ (added 260413)
+HUBSPOT_CLIENT_SECRET ✓ (added 260413)
+HUBSPOT_REDIRECT_URI ✓ (added 260413)
+VERCEL_API_TOKEN ✓ (added 260415 — token: command-ops-watchdog, No Expiration)
 
-### Third-Party Setup Still Needed:
-- Google Cloud Console: OAuth 2.0 client + 3 scopes
-- HubSpot Developers: Public app + 5 scopes
+### Third-Party Setup — ALL DONE (260415-2):
+- Google Cloud Console: OAuth 2.0 client "COMMAND Web" confirmed (created Apr 4) ✓
+  redirect URI: https://app.command.globalinkservices.io/api/integrations/google/callback ✓
+  scopes added: userinfo.email, gmail.compose, documents ✓
+- HubSpot: public app "GlobaLink COMMAND" verified via OAuth bridge ✓
+  client ID: 461a2577-d1b5-4a89-b3c5-7cdf22db8ee0 — accepted by HubSpot
+  redirect URI: https://app.command.globalinkservices.io/api/integrations/hubspot/callback — accepted
+  scopes: crm.objects.contacts.read/write, crm.objects.deals.read/write, oauth — all accepted
+- VERCEL_API_TOKEN: ops-watchdog now has runtime error visibility ✓
 
 ## Symphony v9 Cleanup — COMPLETE (ed34843, 260413)
 Session: COMMAND | QA | Symphony v9 Cleanup | 260413
@@ -167,12 +174,20 @@ Key code files patched:
 - components/Tooltip.tsx
 - lib/glossary.ts (expanded to 17 terms)
 
+## Third-Party Infrastructure — DONE (260415-2)
+Session: COMMAND | Ops | Third-Party Infrastructure + Brain Sync | 260415
+All items that were "pending manual steps" are now closed:
+- GCP scopes configured (userinfo.email, gmail.compose, documents) on globalink-command project
+- Google "COMMAND Web" OAuth client confirmed — redirect URI correct — env vars in Vercel
+- HubSpot "GlobaLink COMMAND" public app verified via OAuth bridge — all 5 scopes accepted
+- VERCEL_API_TOKEN created + added to Vercel prod + .env.local — ops-watchdog unblocked
+- Stray GCP project (command-globalink under jdavis5206@gmail.com) still needs deletion — low priority
+
 ## Next Session Priorities
 1. Send Eric beta invite (Phase 2 + audit-clean + v10.1 verified — ready now)
 2. Grant Carlson 7-day follow-up (check date)
-3. Google Cloud Console: configure OAuth 2.0 client (GOOGLE_CLIENT_ID/SECRET/REDIRECT_URI)
-4. HubSpot Developers: configure public app + 5 scopes
-5. Vercel API token: add to env vars for ops runtime error visibility
+3. v11 symphony run — 20 personas, 8 previously-blocked items, real transactions
+4. Delete stray GCP project: command-globalink under jdavis5206@gmail.com (created in error)
 
 ## FM Cohort
 25 slots | $99/mo | Closes Sep 30 2026
