@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260413-4
+Last updated: 260415
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -141,10 +141,38 @@ Implemented all recommendations from /insights report (177 sessions, Apr 3-14):
 - ~/.claude/commands/closeout.md: /closeout custom command (chat name → brain update → commit → push)
 - ~/.claude/settings.json: pre-commit hook — blocks git commit if tsc or eslint fails (scoped to TypeScript projects only)
 
+## v10 Criticals — ALL CLOSED (260414 → 260415)
+Session: COMMAND | QA | v10 Criticals + v10.1 Verification | 260415
+Commit: e2ebd87 (3 CRIT + 3 MAJOR fixed)
+v10.1 Real-browser verification: 6/6 PASS — SHIP
+
+CRIT-01 Stripe: removed customer_creation from subscription checkout — PASS
+CRIT-02 OAuth: server-side workspace resolution + settingsRedirect helper — PASS
+CRIT-03 API key: pollVendor verify gate in /api/integrations/workspace-key — PASS
+MAJOR-01 Dashboard: sessionStorage flag set at redirect time — PASS
+MAJOR-02 Outputs: Promise.all merging tasks + outputs tables — PASS
+MAJOR-03 data-glossary: attribute added to GlossaryTerm + JargonTooltip — PASS
+
+Verification report: docs/ops/2026-04-15-v10.1-verification.md
+
+Key code files patched:
+- app/api/stripe/checkout/route.ts
+- app/api/integrations/google/auth/route.ts
+- app/api/integrations/hubspot/auth/route.ts
+- app/api/integrations/workspace-key/route.ts (NEW)
+- app/(app)/settings/integrations/page.tsx
+- app/dashboard/page.tsx
+- app/(app)/outputs/page.tsx
+- components/ui/GlossaryTerm.tsx
+- components/Tooltip.tsx
+- lib/glossary.ts (expanded to 17 terms)
+
 ## Next Session Priorities
-1. Send Eric beta invite (Phase 2 + audit-clean, ready now)
+1. Send Eric beta invite (Phase 2 + audit-clean + v10.1 verified — ready now)
 2. Grant Carlson 7-day follow-up (check date)
-3. Google OAuth env vars — GOOGLE_CLIENT_ID/SECRET/REDIRECT_URI still needed in Vercel
+3. Google Cloud Console: configure OAuth 2.0 client (GOOGLE_CLIENT_ID/SECRET/REDIRECT_URI)
+4. HubSpot Developers: configure public app + 5 scopes
+5. Vercel API token: add to env vars for ops runtime error visibility
 
 ## FM Cohort
 25 slots | $99/mo | Closes Sep 30 2026
