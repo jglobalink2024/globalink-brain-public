@@ -283,6 +283,27 @@ Standards locked this session:
 - All deliverables must be clickable links (preview server URL) — never raw file paths
 - All outputs surfaced at END of the turn they are produced
 
+## Brain Intelligence Structure — LIVE (260416)
+Session: GL | OPS | Brain Intelligence System Setup | 260416
+
+Created /brain/ hierarchy in globalink-brain repo for the intelligence signal system.
+Commit: f46537b pushed to jglobalink2024/globalink-brain main.
+
+Files created:
+- brain/signals/active.json — live signals with decay scoring (SIG-0001 test entry confirmed)
+- brain/signals/archived.json — closed/expired signals
+- brain/taskords/active/ — TASKORDs in flight
+- brain/taskords/completed/ — finished TASKORDs with AAR
+- brain/cortex/context.md — standing GL/COMMAND context
+- brain/cortex/decisions.md — commander decisions log
+
+Write/read verification: PASSED (SIG-0001 written and read back).
+Claude Code local auto-memory: confirmed empty — all memory stays in brain repo per CLAUDE.md.
+
+Pending: GitHub MCP registration — requires Jason to run:
+`claude mcp add github -e GITHUB_TOKEN=<actual-PAT> -- npx -y @modelcontextprotocol/server-github`
+PAT scopes needed: repo (full) + read:org, OR fine-grained Contents: Read and write on globalink-brain.
+
 ## Next Session Priorities
 1. (Optional) Enable Claude chat brain writes: GitHub PAT (contents:write on brain repo only) + GitHub's hosted MCP at claude.ai Settings → Integrations → custom MCP. Until then, chat uses output-block fallback — Claude Code commits on next session.
 2. v11 symphony run — 20 personas, 8 previously-blocked items, real transactions (tonight 10 PM CT)
