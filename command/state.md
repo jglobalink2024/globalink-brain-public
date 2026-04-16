@@ -191,6 +191,28 @@ HubSpot was blocked by the Content Security Policy in next.config.mjs:
 All HubSpot calls are currently server-side; fix is forward-looking for client-side status checks
 and any future HubSpot widgets (meetings embed, chat). TypeScript clean. Deployed to production.
 
+## F01/F02 OAuth workspace_id Fix — SHIPPED (87d9527, 260416)
+Session: COMMAND | QA | v10.1 F01/F02 Fix | 260416
+Found during v10.1 symphony (commit d11ca40): Google + HubSpot Connect hrefs missing workspace_id.
+
+Commits:
+- 87d9527: fix: F01/F02 attach workspace_id to OAuth Connect hrefs + session fallback (260416)
+- 5bccc73: chore(deps): pin follow-redirects >=1.16.0 via overrides (Dependabot alert #8)
+
+Changes:
+- page.tsx: href={`/api/integrations/google/auth?workspace_id=${ws.id}`} — same for HubSpot
+- google/auth/route.ts + hubspot/auth/route.ts: query param primary, session fallback, error only if both fail
+- CRIT-02 guardrail preserved — unauthorized direct hits still get error=unauthorized
+- package.json: overrides.follow-redirects >=1.16.0 — closes GHSA-r4q5-vmmm-2653 (moderate, CVSS 6.9)
+- npm audit: 0 vulnerabilities
+
+Dependabot PR #5 can be closed (fix applied via npm overrides).
+
+Post-deploy verification required on production (see tests/personas/COMMAND_F01_F02_Fix_Verify.md):
+- Inspect Google Connect button href — confirm workspace_id=<uuid> present
+- Click Connect Google — confirm redirect to accounts.google.com consent screen
+- Repeat for HubSpot
+
 ## Symphony v11 — READY TO RUN
 Build is clean and all infrastructure is wired:
 - Phase 2 complete + all audits closed
@@ -203,9 +225,11 @@ Avoid: 9 AM – 6 PM CT (peak); avoid 7:01 AM (ops watchdog scheduled run)
 
 ## Next Session Priorities
 1. v11 symphony run — 20 personas, 8 previously-blocked items, real transactions (tonight 10 PM CT)
-2. Send Eric beta invite (Phase 2 + audit-clean + v10.1 verified — ready now)
-3. Grant Carlson 7-day follow-up (check date)
-4. Delete stray GCP project: command-globalink under jdavis5206@gmail.com (created in error, low priority)
+2. Post-deploy verify F01/F02 on production (see COMMAND_F01_F02_Fix_Verify.md) — inspect hrefs + click through OAuth consent screens
+3. Close Dependabot PR #5 on GitHub (follow-redirects fix already applied via npm overrides in 5bccc73)
+4. Send Eric beta invite (Phase 2 + audit-clean + v10.1 verified — ready now)
+5. Grant Carlson 7-day follow-up (check date)
+6. Delete stray GCP project: command-globalink under jdavis5206@gmail.com (created in error, low priority)
 
 ## FM Cohort
 25 slots | $99/mo | Closes Sep 30 2026
