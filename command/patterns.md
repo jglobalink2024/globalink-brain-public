@@ -105,13 +105,29 @@ New routes not in baseline = uncovered monitoring gap → queue for self-patch.
 Removed routes still in baseline = dead checks → flag and remove.
 Always compare local vs production commit SHA — catches silent deploy failures.
 
-## Chat Naming Convention (LOCKED 260413)
+## Chat Naming Convention (LOCKED 260413, UPDATED 260416)
 Name every Claude.ai chat based on the ENTIRETY of the
 conversation — not just the opening topic.
 Format: [GL | WORKSTREAM | Topic · Topic · Topic | YYMMDD]
 Multiple topics separated by ·
-Date = chat creation date (ask Jason if unsure)
+Date = chat START date (the date the chat was created/opened — NOT the date of last activity)
 Example: [GL | COMMAND | Phase 2 Sprint · Audit · Brain Init · 260413]
 Never name a chat based only on the opening question.
+Never use the current date if the chat started on a different day — always use start date.
 Review the full conversation before naming.
 Always suggest a thread name when the session is closing out.
+
+## File Lifecycle Policy (LOCKED 260416)
+Every file Claude creates must be tagged at creation:
+[ONE-USE] — delete after 7 days or after the commit that ran it
+[EVIDENCE] — keep 90 days, then archive (tests/personas/, docs/ops/)
+[PERSISTENT] — keep forever (brain files only)
+
+SESSION_CLOSEOUT_*.md: [ONE-USE], expires 3 days
+CC_*.md in repo root: [ONE-USE], expires 7 days post-commit
+docs/ops/*.md: [EVIDENCE], archive after 30 days (keep RED-health runs forever)
+tests/personas/*: [EVIDENCE], archive after 90 days
+globalink-brain/**: [PERSISTENT]
+
+Cleanup enforced by ops-watchdog Step 6 (daily after health checks).
+Full policy: globalink-brain/command/file-lifecycle.md
