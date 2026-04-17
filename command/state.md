@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260416 (session 2)
+Last updated: 260417
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -66,6 +66,21 @@ VERCEL_API_TOKEN ✓ (added 260415 — token: command-ops-watchdog, No Expiratio
   redirect URI: https://app.command.globalinkservices.io/api/integrations/hubspot/callback — accepted
   scopes: crm.objects.contacts.read/write, crm.objects.deals.read/write, oauth — all accepted
 - VERCEL_API_TOKEN: ops-watchdog now has runtime error visibility ✓
+
+## RUNWAY v1 — SHIPPED (260417)
+File: command-gl/public/runway.html
+Commit: ee616af — feat: RUNWAY v1 — three-act AI confidence ramp
+Pushed: github.com/jglobalink2024/command-gl main
+Local preview: http://localhost:8055/runway.html (server: python3 -m http.server 8055 --directory Downloads)
+Content: 15 cards across 3 acts (Solo/Combo/Multi), live prompt assembly,
+  handoff counter (tool_switches/repastes/reintros), The Realization card,
+  localStorage persistence, mobile-responsive. COMMAND never named — only URL at close.
+Status: VERIFIED in Chrome — hero, cards, tool sequence bars, realization card all render.
+
+## Alhaji Starter Package — COMPLETE (260416)
+File: C:\Users\jdavi\Downloads\alhaji_starter_package.html (self-contained interactive HTML)
+PDF also at: C:\Users\jdavi\Downloads\alhaji_starter_package.pdf (12 pages)
+For: Alhaji Bangura, Crown Government Services, LLC (GovCon registration consulting)
 
 ## Symphony v9 Cleanup — COMPLETE (ed34843, 260413)
 Session: COMMAND | QA | Symphony v9 Cleanup | 260413
