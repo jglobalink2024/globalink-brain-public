@@ -304,8 +304,35 @@ Pending: GitHub MCP registration — requires Jason to run:
 `claude mcp add github -e GITHUB_TOKEN=<actual-PAT> -- npx -y @modelcontextprotocol/server-github`
 PAT scopes needed: repo (full) + read:org, OR fine-grained Contents: Read and write on globalink-brain.
 
+## SIGNAL CENTER — CORTEX Setup COMPLETE (260416)
+Session: GL | COMMAND | SIGNAL CENTER · CORTEX Setup | 260416
+
+Wired GitHub MCP read/write access for RECON-1/Cowork sessions. Full CORTEX structure built.
+
+What was done:
+- Extracted stored OAuth token (gho_) from git credential manager — has admin/push/pull on both repos
+- Set GITHUB_PERSONAL_ACCESS_TOKEN as persistent Windows user env var (survives reboots)
+- Added `github-brain` MCP server to claude_desktop_config.json with token embedded — active after next Claude restart
+- Added decay_config.json to private brain repo (/brain/cortex/) — committed + pushed (3a57af6)
+- Built full CORTEX structure on public mirror (globalink-brain-public) via Git tree API — 7 files, 1 atomic commit (8c30f1a)
+- Read/write test on public mirror: WRITE ✓ READ ✓ DELETE ✓
+
+CORTEX structure — both repos:
+  brain/signals/active.json       ← live signals (empty array)
+  brain/signals/archived.json     ← archived signals (empty array)
+  brain/cortex/context.md         ← standing GL/COMMAND context
+  brain/cortex/decisions.md       ← commander decisions log
+  brain/cortex/decay_config.json  ← urgency decay rules (CRITICAL/ACTIONABLE/WATCH/INTEL)
+  brain/taskords/active/          ← TASKORDs in flight
+  brain/taskords/completed/       ← finished TASKORDs
+
+MCP config (after next Claude restart):
+- Private writes: `github-brain` server in claude_desktop_config.json → @modelcontextprotocol/server-github
+- Public mirror writes: same token works on globalink-brain-public
+- Cowork/RECON-1 snippet: see brain-sync-protocol.md
+
 ## Next Session Priorities
-1. (Optional) Enable Claude chat brain writes: GitHub PAT (contents:write on brain repo only) + GitHub's hosted MCP at claude.ai Settings → Integrations → custom MCP. Until then, chat uses output-block fallback — Claude Code commits on next session.
+1. Restart Claude Desktop to activate github-brain MCP server — verify with `claude mcp list`
 2. v11 symphony run — 20 personas, 8 previously-blocked items, real transactions (tonight 10 PM CT)
 3. Post-deploy verify F01/F02 on production (see COMMAND_F01_F02_Fix_Verify.md) — inspect hrefs + click through OAuth consent screens
 4. Close Dependabot PR #5 on GitHub (follow-redirects fix already applied via npm overrides in 5bccc73)
