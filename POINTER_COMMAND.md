@@ -12,6 +12,12 @@ https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/com
 https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/command/research.md
 https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/principles.md
 https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/gl/decisions.md
+https://raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/RESPONSE_RULES.md
+
+## Response format
+All instances load RESPONSE_RULES.md above for universal response formatting rules.
+Do not duplicate these rules inline in CLAUDE.md or any other file.
+RESPONSE_RULES.md is the single source of truth.
 
 ## Session type guidance:
 
