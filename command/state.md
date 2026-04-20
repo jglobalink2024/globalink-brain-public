@@ -1,6 +1,18 @@
 # COMMAND — Current State
 Last updated: 260420
 
+## Symphony v12.1 EXECUTED — verdict: SHIP (C3 unverified, F1 closed) (260420)
+Session: [GL | QA | Symphony v12.1 C3 Patch · F1 Close · DEEP Probe | 260420]
+
+- **F1 CLOSED** (BILL-03 / commit f2ffa0c): `isCurrentTier` short-circuits on `trialing` + FM precedence; J5 harness 4/4 PASS at count=1; Jason visual confirm received
+- **Matrix v12.1**: 4 PASS (J5 re-verified), 12 PASS (v12 carried), 2 NOT_TESTED (J2 × P1/P4 shallow rescore), 2 INCONCLUSIVE (C3 × P2/P3 DEEP)
+- **C3 deep probe: INCONCLUSIVE** for P2 Eric + P3 Danielle — live `/send-task` UI was redesigned vs source-tree assumptions; harness captured only `/api/route-task`, never fired dispatch/execute. NOT a product failure — harness integrity issue. Tracked as F5.
+- **Budget:** zero vendor inference dollars spent (0 × anthropic/openai/perplexity POSTs). Well under $10 ceiling.
+- **New findings:** F3 (/overview + side-nav silent slow-load), F4 (router 70% threshold may gate medium-confidence research), F5 (harness vs live-UI mismatch)
+- **Doctrine shipped to brain** (d7b5da6): v12.1 patterns delta — C3 categorical, shallow ≠ C3 PASS, deep probe required for P2/P3; public mirror verified
+- **Proof files**: command/symphony/v12.1/{ProofLog,Findings,Matrix,Delta_v12_v121,F1_verification,flow_discovery}.md
+- **Harness shipped**: command-app e2e/symphony_v12/journeys/J2_handoff_deep.spec.ts (commit b702f88) — needs v12.2 rewrite against /send-task UI
+
 ## Symphony v12 EXECUTED — verdict: SHIP WITH FIXES (260420)
 Session: [GL | QA | Symphony v12 Execution · 4P × 5J Matrix | 260420]
 
