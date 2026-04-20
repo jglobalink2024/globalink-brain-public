@@ -1,5 +1,30 @@
 # COMMAND — Current State
-Last updated: 260420 (Grant Carlson follow-up SENT + voice profile locked)
+Last updated: 260420 (brain sync workflow fixed + Grant follow-up SENT + voice profile locked)
+
+## Brain Sync Workflow FIXED — allowlist → blocklist (260420)
+Session: [GL | OPS | Brain Sync Fix · Grant Follow-up · Voice Profile | 260420]
+Commits: b0f5746 (workflow), 491b04d (activity log), 43f575f (Grant brain updates)
+
+**What changed:**
+- .github/workflows/sync-public.yml: replaced explicit cp allowlist (5 files) with recursive rsync blocklist (everything except gl/entities.md)
+- command/ now syncs subdirectories (symphony/v11, v12, v12.1) and any future files automatically
+- gl/ syncs recursively with `--exclude='entities.md'` — only file with that basename exists at gl/entities.md, so pattern is safe
+
+**Verification (post-deploy):**
+- 5/5 target URLs returned 200: agent_activity_log.md, candidate_agent_specs.md, symphony/v12/Personas, Journeys, Claims
+- Safety check: gl/entities.md returned 404 CONFIRMED
+
+**Grant Carlson session updates also landed:**
+- command/state.md: new GTM Pipeline section with Grant T1 entry (follow-up #1 SENT, awaiting reply)
+- gl/principles.md: Voice Rules → full Voice Profile (opener, structure, verbs, frame, warmth, rhythm, sign-off, banned phrases)
+- command/killed.md: Banned Language section with 260420 "circle back" kill
+
+**What's next:**
+- Grant reply → fire branch A/B/C/D draft
+- v12.1 C3 patch can fire with confidence brain state is current on public mirror
+- Agent 5 Claude can resume brain URL fetches
+
+**Blockers:** none
 
 ## symphony-journey-architect Agent — BUILT + TESTED (260420)
 Session: [GL | AGENTS | symphony-journey-architect Build · Activation Test | 260420]

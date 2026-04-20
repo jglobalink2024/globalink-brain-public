@@ -1,5 +1,18 @@
 # COMMAND — Decisions Register
-Last updated: 260413-4
+Last updated: 260420
+
+## 260420 — Public mirror sync = blocklist, not allowlist
+Decision: sync-public.yml uses recursive rsync with a single exclude (gl/entities.md)
+  rather than explicit cp-by-file.
+Rationale: Allowlist silently drops new subdirectories (symphony/**) and any new
+  top-level files — public mirror got stuck 14+ files behind private, blocking
+  agent-5 and all multi-instance Claude workflows from reading current state.
+Pattern: "sync everything under command/ and gl/, exclude only gl/entities.md."
+  Any future private-only file must also be added to the exclude list explicitly.
+Safety invariant: gl/entities.md is the ONLY private file. Re-verify before adding
+  any new gl/ content that might contain prospect/pipeline data.
+
+
 
 ## 260413 — Ops-watchdog run logs committed to git (not local-only)
 Decision: Write run logs to docs/ops/ inside the repo, committed after every run.
