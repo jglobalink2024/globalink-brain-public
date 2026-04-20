@@ -1,6 +1,29 @@
 # COMMAND — Current State
 Last updated: 260420
 
+## v12 design complete (260420)
+
+- **BILL-02 fix shipped**: commit 3593d49 in command-app. Billing page now shows
+  4 correct tiers (Solo $49, FM $99, Standard Pro $149, Agency $799), no phantom
+  Studio $349, current plan computed from subscription state (not hardcoded).
+  Post-deploy Vercel verify is PENDING before Symphony v12 can fire.
+- **v12 persona-journey matrix design complete**: 4P × 5J × 7C — four behavioral
+  personas (Iris/Eric/Danielle/Marcus), five journeys (first dispatch through
+  conversion), seven claim pass/fail criteria. Total ~125 min execution time.
+- **Doctrine shift**: click-then-observe supersedes DOM-presence testing. Every
+  assertion is a post-action observation verified by screenshot, network payload,
+  DOM state at t+N, or credit delta. v11 item-checklist approach retired for QA
+  passes, conversion audits, and claim validation.
+- **Execution pending**: Vercel deploy verify + agent re-auth (Claude-1 / GPT-4-1 /
+  Perplexity-1) + credit balance confirm > $5. Once clear: fire orchestrator prompt
+  (COMMAND_Symphony_v12_Prompt.md) in a fresh Opus 4.7 chat.
+- **v11 proof files remain canonical**: all v11 artifacts (8 proof files in
+  command/symphony/v11/) remain frozen and authoritative for items covered by v11.
+  v12 augments — it does not replace v11 findings.
+
+Brain artifacts: command/symphony/v12/ (5 files staged 260420 via CC)
+Playwright harness: command-app e2e/symphony_v12/ (staged 260420 via CC)
+
 ## Symphony v11 Full Production QA Sweep — COMPLETE (4822016, 260417)
 Session: [GL | QA | Symphony v11 Full Run · Billing Tier Mismatch | 260417]
 Real-browser only (Claude in Chrome MCP) against app.command.globalinkservices.io.

@@ -168,3 +168,127 @@ globalink-brain/**: [PERSISTENT]
 
 Cleanup enforced by ops-watchdog Step 6 (daily after health checks).
 Full policy: globalink-brain/command/file-lifecycle.md
+
+## Testing doctrine — journey-matrix over item-checklist (v12 onward)
+
+**Why the shift**:
+v11 scored 56/64 PASS at the item level but missed that the crown-jewel
+claim (context handoff) had never been tested end-to-end with real
+payload inspection. The item-based approach optimizes for "does the
+button exist" when what we actually need is "does the button do what
+we claim when a real user clicks it." BILL-02 (phantom Studio tier)
+was caught in v11 only because it happened to fall inside an item
+check — a journey-based approach would have caught it on persona P2's
+first conversion attempt.
+
+**The new doctrine**:
+
+1. Tests are organized by PERSONA × JOURNEY × CLAIM, not by feature or
+   page.
+2. Every assertion is a POST-ACTION observation. Code reading is not
+   evidence. DOM presence is not evidence. Endpoint 200 is not evidence.
+3. Four legitimate verification methods:
+   - Screenshot comparison (pre-action vs post-action)
+   - Network payload inspection (request AND response body)
+   - DOM state at t+Ns post-action
+   - Backend query or credit-balance delta
+4. Personas have BEHAVIORAL CONSTRAINTS (what they'd do, what would
+   make them abandon). Orchestrator must honor these — if Marcus
+   would never open DevTools, the orchestrator running as Marcus
+   cannot use DevTools.
+5. Abandon signals are first-class outcomes. A product that ships
+   with a P1 abandon signal is broken for Iris, even if every assertion
+   passes.
+
+**What this doctrine does NOT replace**:
+- CC (Claude Code) multi-file build sessions still use item-level
+  verification (TypeScript exit 0, preflight PASS, ESLint 0)
+- Unit tests stay item-level
+- Migration audits stay item-level
+- Security reviews stay item-level
+
+**What it replaces**:
+- Any pre-beta QA pass
+- Any conversion-path audit
+- Any customer-facing claim validation
+
+**Scoring rubric**:
+- ≥95% PASS → SHIP
+- 85–94% with 0 CRITICAL on C3/C4/C6 → SHIP WITH FIXES
+- <85% OR any CRITICAL on C3/C4/C6 → DO NOT SHIP
+
+C3 (handoff) is weighted 2x. Context handoff failure is product-thesis
+failure — no other score can compensate.
+
+---
+
+## File locations
+
+Canonical artifacts for v12:
+- globalink-brain/command/symphony/v12/COMMAND_Personas_v12.md
+- globalink-brain/command/symphony/v12/COMMAND_Journeys_v12.md
+- globalink-brain/command/symphony/v12/COMMAND_Claims_v12.md
+- globalink-brain/command/symphony/v12/COMMAND_Symphony_v12_Prompt.md
+
+Future symphonies (v13+) inherit this structure. Personas and
+journeys evolve as the product grows; claims evolve as marketing
+evolves. The doctrine — click-then-observe — does not evolve.
+
+---
+
+## Persona roster (v12 baseline)
+
+- P1 Iris: Non-technical stakeholder, low fluency, Jason's wife
+- P2 Eric: Actual P1 beta target, medium-high fluency, real customer
+- P3 Danielle: Primary ICP (RevOps at boutique consulting), medium-high
+- P4 Marcus: Tertiary ICP (solo coach), low-medium fluency, warm outbound
+
+Additions for later symphonies (suggest, do not add without Jason's green-light):
+- P5 Danny Suk Brown: RAP-flagged real outbound target
+- P6 LATAM operator (post-May 1)
+- P7 Enterprise buyer (Phase 3, not MVP)
+
+---
+
+## Journey roster (v12 baseline)
+
+- J1 First dispatch (happy path, zero-key)
+- J2 Multi-agent handoff with context transfer (crown jewel)
+- J3 Failure recovery
+- J4 Returning user / state persistence
+- J5 Pilot → paid conversion
+
+Journeys NOT YET IN DOCTRINE (candidates for v13+):
+- J6 BYOK configuration flow (standalone, currently folded into J3)
+- J7 Team/workspace invitation flow (if multi-seat ships)
+- J8 MCP server registration (currently API-only, tested in J2.7)
+
+---
+
+## Anti-patterns (explicit DO NOTs)
+
+- ❌ Do not run v12 against synthetic personas when real outbound
+   targets exist — stay grounded in real buyer profiles
+- ❌ Do not run v12 without real credit burn — "simulated" tests are
+   not v12 tests
+- ❌ Do not skip the persona entry/exit protocol — that's the
+   behavioral enforcement layer
+- ❌ Do not weight C3 equally with other claims — it's product-thesis
+- ❌ Do not let a "mostly passed" verdict become a ship decision —
+   the rubric is categorical for a reason
+- ❌ Do not re-run a full symphony to verify a single fix — use
+   a surgical v12.1 patch covering only the failed cells
+
+---
+
+## Commit convention
+
+When committing symphony artifacts:
+```
+brain: symphony v[N] [complete|in-progress|verdict]
+```
+
+When committing doctrine updates to patterns.md:
+```
+brain: patterns — [short description of doctrine change]
+```
