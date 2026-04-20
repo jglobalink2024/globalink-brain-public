@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260420
+Last updated: 260420 (brain-committer build)
 
 ## cc-prompt-architect Agent — BUILT + TESTED (260420)
 Session: [GL | AGENTS | cc-prompt-architect Build · Test Activation | 260420]
@@ -612,6 +612,20 @@ Fixed billing page tier mismatch (Symphony v11 MAJOR finding):
 
 TypeScript: exit 0 | ESLint: 0 errors | preflight.ps1: PASS
 Post-deploy browser verify: PENDING (see PENDING_ACTIONS.md)
+
+## brain-committer Agent — BUILT (834b116, 260420)
+Session: [GL | AGENTS | brain-committer Build | 260420]
+
+- **Agent file created**: `~/.claude/agents/brain-committer/SKILL.md`
+  - Input contract: file path, content, lifecycle tag, commit category
+  - Output: tagged file header + exact `cd + git add + git commit + git push` sequence
+  - Hard guards: REFUSE gl/entities.md writes; REFUSE frozen symphony v[N]/ edits without explicit override
+  - Commit format enforced: `brain: [category] — [description]`; auto-prepends `brain:` if missing
+  - Append-only enforcement for log, patterns, state, reviews files
+- **Dependency check**: cc-prompt-architect SKILL.md confirmed present (initial check false-negative due to Windows `~` path resolution — resolved on retry via `ls ~/.claude/agents/`)
+- **Brain updates**: agent_activity_log.md (new build entry) + candidate_agent_specs.md (AGENT 2 → Status: BUILT 260420) — commits 834b116, 3212e1b
+- **candidate_agent_specs.md**: Agents 1–2 now BUILT; Agents 3–6 remain HOLD (post-Eric gate)
+- **candidate_agent_specs.md public mirror**: 404 on raw.githubusercontent.com at session time — file exists locally and was committed to private brain; sync lag expected
 
 ## Agent Tracking System — COMMITTED (cb46fe1, 260420)
 Session: [GL | OPS | Agent Tracking System · RAP Doctrine · Candidate Specs | 260420]
