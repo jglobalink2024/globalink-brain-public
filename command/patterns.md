@@ -292,3 +292,94 @@ When committing doctrine updates to patterns.md:
 ```
 brain: patterns — [short description of doctrine change]
 ```
+
+---
+
+## Dispatch flow architecture — two-step (v12.1 forward)
+
+**Discovered during v12 network capture review**:
+The production dispatch flow is TWO STEPS, not one:
+
+**Step 1 — Recommendation**
+- User submits prompt → POST /api/route-task
+- Router returns recommendation (agent name, confidence, reasoning, alternatives)
+- No downstream agent call fires yet
+
+**Step 2 — Dispatch**
+- User reviews recommendation → clicks a subsequent control
+- Actual agent dispatch fires
+- Agent A processes → output lands → handoff to Agent B (if chained)
+
+**Why this matters architecturally**:
+- User retains control — the router is explainable and overridable
+- Accidental dispatches (wrong prompt, wrong tier) don't burn credits
+- The recommendation itself is a product feature, not a side effect
+- Testing must walk BOTH steps — Step 1 alone tests routing, not dispatch
+
+**Testing implication**:
+Any Symphony spec that tests dispatch, handoff, or downstream chains
+MUST walk the second step. A test that stops after /api/route-task
+returns tests C1 (router intelligence) and only C1. C3 (handoff) and
+C2 (actual output persistence) require walking Step 2.
+
+**Harness requirement**:
+- beginCapture() starts before Step 1 submission
+- endCapture() ends after Agent B output lands OR after a timeout
+  (recommend 90s ceiling for research → synthesis flows)
+- Screenshot pairs at EACH boundary: submission, recommendation display,
+  dispatch click, Agent A output, Agent B output
+- Network payload inspection on EVERY /api/* call between Step 1 and
+  end-of-chain, not just the first
+
+---
+
+## Shallow C3 is NOT a PASS (doctrine correction)
+
+**v12 error**: The Matrix_v12.md marked J2 × P1 Iris, J2 × P3 Danielle,
+and J2 × P4 Marcus as "PASS (shallow)" for C3. This was wrong per the
+doctrine committed in v12's patterns.md delta:
+
+> "C3 has NO partial state. Context transfer either works or doesn't.
+> Partial context transfer IS failure — Eric and Danielle will notice."
+
+**Correction**:
+A shallow probe of C3 that verifies surface discoverability (e.g.,
+/bridge page renders) is NOT a PASS. It's evidence for C7 (registry
+persistence) or discoverability, not for the core handoff claim.
+
+**Going forward**:
+- C3 requires POSITIVE evidence of Agent-A-output-in-Agent-B-input
+  AND Agent-A-entities-in-Agent-B-output, for EVERY persona assigned
+  a C3-bearing journey
+- "Shallow C3 = PASS" is a forbidden pattern in Symphony results
+- If a run cannot walk the full chain, C3 cells are marked INCONCLUSIVE,
+  not PASS
+- Matrix must distinguish PASS, INCONCLUSIVE, PARTIAL, and FAIL as
+  separate verdicts — not collapse them
+
+**Applies to**:
+All symphonies v12.1 onward. v12 proof files stay as historical record;
+they're accurate about the evidence they captured, but the scoring on
+J2 shallow cells was lenient.
+
+---
+
+## Symphony severity semantics (clarification)
+
+**INCONCLUSIVE vs PARTIAL**:
+These are different, though v12 used them interchangeably.
+
+- **INCONCLUSIVE**: Test could not exercise the claim. Evidence gap.
+  Not a product judgment. Example: "harness stopped before Agent B
+  invocation; C3 untested."
+- **PARTIAL**: Test exercised the claim; claim works imperfectly.
+  Product judgment. Example: "handoff fires but Agent B's output
+  only references 1 of 2 required entities from Agent A."
+- **PASS**: Test exercised the claim; claim works per spec.
+- **FAIL**: Test exercised the claim; claim doesn't work or works wrong.
+
+**Rubric implication**:
+- INCONCLUSIVE on C3 → can't ship to real customer, but not a defect
+- PARTIAL on C3 → product defect, must fix before ship
+- Both require the same immediate response (fix the gap), but the
+  root cause and remediation path differ
