@@ -176,6 +176,35 @@ notes: |
 ---
 
 ---
+date: 260420
+session_type: ops
+vehicle: cc
+task: Fixed brain public mirror sync workflow (allowlist → blocklist)
+scan_performed: yes
+activated: none (no deployed agent matches ops/workflow-edit tasks)
+why: Sync workflow used explicit cp allowlist that missed all subdirectories
+  (command/symphony/**) and new top-level files (command/agent_activity_log.md,
+  command/candidate_agent_specs.md). Public mirror was stuck at 5 command/
+  files from run #59. Blocked agent-5 Claude and all multi-instance workflows
+  from reading current brain state via public URLs.
+outcome: shipped
+efficiency_gain: high (unblocks every future Claude instance from stale reads)
+gap_flagged: none
+related_commit: b0f5746
+notes: |
+  Replaced allowlist cp-by-file approach with blocklist rsync approach.
+  command/ now syncs recursively (subdirectories and future files included
+  automatically). gl/ syncs recursively with --exclude='entities.md'.
+  Pre-verified exclude pattern safety: only one file named entities.md
+  exists in the tree (gl/entities.md), so basename match is both sufficient
+  and unambiguous. Post-deploy verification: all 5 target URLs returned
+  200 (agent_activity_log, candidate_agent_specs, symphony/v12/Personas,
+  Journeys, Claims); safety check on gl/entities.md returned 404.
+  Placeholder project copies (ponte, traverse, phase-line) and POINTER
+  file copies retained as-is — out of scope for this fix.
+---
+
+---
 
 ## Monthly review protocol
 
