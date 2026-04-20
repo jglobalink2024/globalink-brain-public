@@ -1,5 +1,30 @@
 # COMMAND — Current State
-Last updated: 260420 (agents_protocol_check constraint fix — api_proxy added)
+Last updated: 260420 (executeTask pooled key fallback — getPooledKey helper extracted)
+
+## executeTask Pooled Key Fallback — SHIPPED (0edc12d, 260420)
+Session: [GL | COMMAND | executeTask Pooled Key Fix | 260420]
+Commit: 0edc12d → github.com/jglobalink2024/command-app main
+
+**Problem:** `executeTask.ts:247` hard-stopped with `no_api_key` when `agent.api_key` was null — no pooled key fallback. Proxy route already had the correct pattern but it was inline. Perplexity env var read as `PERPLEXITY_API_KEY` in proxy but Vercel var was named `PPLX_API_KEY` (mismatch risk).
+
+**Fix:**
+- `lib/utils/keys.ts` (NEW): `getPooledKey(vendor)` helper — reads `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `PERPLEXITY_API_KEY ?? PPLX_API_KEY` from process.env
+- `lib/pipeline/executeTask.ts`: replaced hard-stop gate with `resolvedApiKey = agent.api_key ?? getPooledKey(vendor)` — all downstream uses updated
+- `app/api/agents/proxy/route.ts`: inline `process.env.*` calls replaced with `getPooledKey()` — eliminates duplication and inherits PPLX compat
+
+**Key details:**
+- Vendor field: `agent.vendor` (confirmed present in DB query, lowercase)
+- Perplexity reads BOTH `PERPLEXITY_API_KEY` and `PPLX_API_KEY` — whichever is set in Vercel resolves
+- TypeScript: exit 0 | ESLint: 0 errors
+- Vercel auto-deploy triggered on push
+
+**Jason's next test:**
+1. Wait ~2 min for Vercel deploy
+2. Sign in as jcameron5206@proton.me → /send-task → Run with Perplexity-1
+3. DevTools Network: watch for `api.perplexity.ai` POST
+4. Expected: real research output renders — no more 400
+
+---
 
 ## agents_protocol_check Constraint Fix — SHIPPED (84b1a4b, 260420)
 Session: [GL | OPS | agents_protocol_check Fix | 260420]
