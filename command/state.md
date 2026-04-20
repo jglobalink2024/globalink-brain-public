@@ -1,5 +1,40 @@
 # COMMAND — Current State
-Last updated: 260420 (symphony-scorer built + v12.1 live test produced stricter DO NOT SHIP verdict)
+Last updated: 260420 (gap-flagger installed + first monthly review executed)
+
+## gap-flagger Agent — BUILT + FIRST REVIEW COMPLETE (260420)
+Session: [GL | AGENTS | gap-flagger Install · First Review | 260420]
+Commits: 87285ba (brain log + spec), 4dc5e97 (agent_review_2604.md)
+
+**What changed:**
+- Agent file created: `~/.claude/agents/gap-flagger/SKILL.md` — 28-day rolling review agent
+  - 14-step analysis protocol, 13-section locked output format, 8 failure modes defined
+  - Inherited doctrine: 4 rules from command/patterns.md (soft-flag default, fail-safe-not-fail-open, 4-tier fuzzy match, system_prompt redaction)
+  - Thresholds locked: 28-day window, 60-day retirement lookback, >40% concentration, ≥3 gap instances, >60% inertia pair
+  - Source provenance: Research (Gemini Pro), Draft (ChatGPT Plus), Structure (Claude Opus 4.7), Install (CC Sonnet 4.6)
+- `command/agent_activity_log.md`: gap-flagger build entry appended (multi-model vehicle)
+- `command/candidate_agent_specs.md`: AGENT 6 → Status: BUILT 260420; 6/6 queue complete
+- `command/reviews/agent_review_2604.md`: first monthly review (baseline; 9 entries, all 260420)
+
+**First review findings:**
+- brain-committer concentration WATCH (50% of activations) — doctrine requires 2 consecutive windows before escalating
+- **Schema mismatch (action required):** SKILL.md input contract uses `agent_name / timestamp / task_outcome / first_month`; live log uses `activated / date / outcome / no first_month` — pick one and commit to decisions.md
+- Gap bucket empty — all 4 previously flagged gaps resolved by 6-agent build queue
+- Compliance score: 78% (above 70% threshold)
+- Next trigger: May 1 2026 for April review
+
+**Agent queue: 6/6 BUILT** (cc-prompt-architect, brain-committer, symphony-persona-architect, symphony-journey-architect, symphony-scorer, gap-flagger)
+
+**Blockers:** None
+
+**What's next:**
+- Resolve schema mismatch (log vs. SKILL.md) — commit decision to command/decisions.md
+- May 1: gap-flagger fires for April review (first live window with real operational data)
+
+---
+
+## symphony-scorer Agent — BUILT + LIVE-TESTED (260420)
+Session: [GL | AGENTS | symphony-scorer Build · v12.1 Doctrine Test · Closeout | 260420]
+Commit: d417ab0 (agent file) + this closeout commit (log + spec + state)
 
 ## symphony-scorer Agent — BUILT + LIVE-TESTED (260420)
 Session: [GL | AGENTS | symphony-scorer Build · v12.1 Doctrine Test · Closeout | 260420]
