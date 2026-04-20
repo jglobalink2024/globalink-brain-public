@@ -1,5 +1,28 @@
 # COMMAND — Current State
-Last updated: 260420 (brain-committer pipeline test)
+Last updated: 260420 (symphony-journey-architect BUILT + activation-tested)
+
+## symphony-journey-architect Agent — BUILT + TESTED (260420)
+Session: [GL | AGENTS | symphony-journey-architect Build · Activation Test | 260420]
+
+- **Agent file created**: `~/.claude/agents/symphony-journey-architect/SKILL.md` (14,964 bytes)
+  - Input contract (6 required fields: name+purpose, claims, personas×depth, preconditions, constraints, runtime budget)
+  - Output format matches v12 Journeys_v12.md template (ACTION / EXPECTED OBSERVABLE / VERIFICATION / FAIL SIGNAL per step)
+  - Six verification methods enforced: screenshot pair, network payload, DOM state at t+Ns, backend query, credit delta, console capture
+  - Forbidden methods refused: button-exists, code-reads-correct, endpoint-200-only, status-shows-Working
+  - C3 doctrine: no PARTIAL state, no "PASS (shallow)" verdict, substring + entity-match both required
+  - Depth rule: DEEP ≥ 1.5× STRUCTURAL assertions (substantive, not cosmetic)
+  - Runtime calibration: 1 min / 2 DEEP assertions, 1 / 3 STRUCTURAL, 1 / 4 SURFACE — enforced pre-return
+  - Post-generation self-check: 9-item checklist before any spec ships
+- **Brain updates committed** (commit `fdcd964`): AGENT 4 marked Status: BUILT 260420 in candidate_agent_specs.md; zeroth log entry in agent_activity_log.md
+- **Dependency caveat**: Initial check showed Agents 01 + 02 absent/empty at ~/.claude/agents/. User override proceeded; built using v12 journey specs + brain spec's output-contract as format anchors. Agents 01 + 02 confirmed installed later in session.
+- **Activation tested** in fresh CC session — 3/3 PASS:
+  - **Test 1** (Skills Library C7 journey): Agent auto-invoked, blocked on missing journey number + purpose + surface shape. Proactively flagged that C7-only scoping produces ~6-8 min journey and refused to ship a "15-min runtime lie." Caught a calibration problem Jason would have missed.
+  - **Test 2** (shallow C3 request): Clean refusal — "REFUSED — C3 admits no shallow pass." Cited patterns.md + v12→v13 doctrine. Offered three legitimate paths (full C3, C7 relabel, scoped C3 subset).
+  - **Test 3** (missing claims): "BLOCKED — required input fields are missing." Listed candidate claims (C1/C3/C5/C7) without guessing. Required personas with DEEP for any C3-bearing work.
+  - **Bonus signal**: All three openings included `CALIBER: 15/18 → Opus` — pre-flight rubric internalized, not just cited.
+- **Parallel**: symphony-scorer (AGENT 5) also built this session by a sibling CC instance; Status: BUILT 260420 in candidate_agent_specs.md. Log entry live.
+- **Candidate agents state**: Agents 1, 2, 4, 5 BUILT. Agents 3 (symphony-persona-architect), 6 (gap-flagger) remain HOLD.
+- **Next**: Agent available for v13 planning or earlier if Phase 1.5 / Phase 2 features need journey coverage. First real activation will validate doctrine enforcement under production-weight inputs.
 
 ## brain-committer pipeline test — PASS (260420)
 Session: [GL | BRAIN | Pipeline Test · Closeout | 260420]
