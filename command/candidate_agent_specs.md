@@ -95,6 +95,8 @@ messages, entity.md leakage prevention.
 
 ## AGENT 3 — `symphony-persona-architect`
 
+**Status: BUILT 260420**
+
 **Priority**: P1 (recurs every symphony, but symphonies are less frequent)
 
 **Purpose**: Generate persona briefs with behavioral constraints,
