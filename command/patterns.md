@@ -295,6 +295,178 @@ brain: patterns — [short description of doctrine change]
 
 ---
 
+## Agent/Skill activation tracking (v12.1 forward)
+
+**Goal**: Know which agents are load-bearing, which tasks lack matching
+expertise, and whether RAP (Recon-Activate-Protocol) is actually being
+followed.
+
+**Canonical log**: `globalink-brain/command/agent_activity_log.md`
+
+**Write discipline**:
+Every Claude instance (CC, Claude.ai chat, Claude for Chrome) writes
+one YAML frontmatter entry per non-trivial task that involved (or
+should have involved) an agent/skill scan.
+
+**What counts as non-trivial** (triggers RAP + log entry):
+- Multi-file builds
+- Strategic writing (pitches, personas, journeys)
+- QA runs or Symphonies
+- GTM content (outreach, one-pagers, email drafts)
+- Patent/competitive/research work
+- Any task that would reasonably take > 15 min of focused effort
+
+**What does NOT trigger** (skip RAP and log):
+- Trivial lookups, single commits to fix typos, status checks
+- Conversational turns in a chat that are purely clarifying
+- File operations (mv, cp, commit) with no design content
+
+---
+
+## RAP doctrine (updated)
+
+**Recon-Activate-Protocol** was defined in earlier memory; this section
+makes it operational with tracking.
+
+**Before starting a non-trivial task**:
+1. 🔎 Scan agent/skill libraries:
+   - CC / CfC: list `~/.claude/agents/` and `command-app/.cursor/rules/`
+   - Claude.ai chat: declare "no filesystem access — Jason, do you want
+     me to leverage a specific agent?" OR work from first principles
+     and flag for retrospective logging
+2. 📋 Decide:
+   - **Activate**: existing agent/skill fits → announce "📡 RAP: Activated
+     [Name]" and use it
+   - **None fit**: no match in library → work from first principles, flag
+     `gap_flagged` in log entry if task is likely to recur
+3. 📝 Log: write YAML entry to `agent_activity_log.md` with all required
+   fields before closing the session
+
+**Compliance gates**:
+- CC must include "RAP: [activation status]" in every Phase 7 report
+- Claude.ai chat declares scan status in opening response of any session
+  involving non-trivial tasks
+- Silent skips (doing non-trivial work without declaring scan) count as
+  violations and reduce monthly compliance score
+
+---
+
+## What "load-bearing" means
+
+An agent is **load-bearing** if:
+- Activated ≥ 3 times in 30 days AND
+- Outcomes on those activations were ≥ 80% shipped
+
+An agent is a **retirement candidate** if:
+- Activated 0 times in 60 days OR
+- Activated but outcomes were consistently blocked/abandoned
+
+An agent is a **refinement candidate** if:
+- Activated ≥ 3 times AND
+- Outcomes split 50/50 shipped vs blocked (suggests scope mismatch or
+  prompt decay)
+
+**Activation concentration (new metric)**:
+If any single agent accounts for > 40% of all activations in the 30-day
+window, flag it in the monthly review as a concentration risk. Reasons
+this matters:
+- Over-reliance on one agent suggests we're solving every problem with
+  the same hammer (the "golden hammer" anti-pattern)
+- May indicate missing specialist agents (we default to the generalist
+  because no specialist exists)
+- May indicate the generalist has drifted to cover too many use cases
+  and is overdue for refactoring into multiple focused agents
+
+Flag format in monthly review:
+  "⚠️ Concentration risk: [agent-name] = X% of activations. Candidates
+  to split: [task types that should have their own agent]"
+
+This is a SOFT flag — it prompts review, not automatic action. Jason
+decides whether to split, retire, or leave as-is.
+
+---
+
+## What gap-flagging triggers
+
+When `gap_flagged` mentions the same agent name **≥ 3 times in 30 days**,
+the monthly review auto-adds it to a build queue.
+
+Build queue priorities:
+- P0: flagged with outcome=blocked (product was delayed)
+- P1: flagged with outcome=partial (product shipped but could've been better)
+- P2: flagged with outcome=shipped (would have been faster)
+
+---
+
+## Integration with session types
+
+Session-type-to-agent-affinity examples (non-exhaustive):
+
+| Session type | Likely agents to scan |
+|---|---|
+| build | cc-prompt-architect, migration-runner, test-harness-builder |
+| strategy | competitive-analyst, first-principles-kill-test, pitch-reviewer |
+| gtm | outbound-writer, one-pager-builder, icp-validator |
+| qa | symphony-scorer, symphony-persona-architect, journey-walker |
+| patent | prior-art-auditor, claim-drafter, novelty-scorer |
+| competitive | zero-competitor-audit, positioning-sharpener |
+| ops | brain-committer, state-md-writer, ops-watchdog |
+
+This table is a starter — additions come from real activations, not speculation.
+
+---
+
+## Commit convention for log entries
+
+Log entries themselves are committed like any other brain write:
+```
+brain: log — [activation or gap flag headline]
+```
+
+Example:
+```
+brain: log — activated symphony-persona-architect for v13 persona extensions
+brain: log — gap flagged: missing patent-claim-differentiator
+```
+
+Logs are NEVER squashed, rewritten, or deleted. The append-only property
+is what makes monthly analysis honest.
+
+---
+
+## Monthly review
+
+Runs first day of each month. Output file:
+```
+globalink-brain/command/reviews/agent_review_YYMM.md
+```
+
+Strategic AI (or Jason) reads `agent_activity_log.md`, runs the tallies
+described in the log file itself, produces the summary, commits it:
+```
+brain: review — agent usage YYMM
+```
+
+First review (May 1 2026) covers the window from this doctrine's commit
+date through April 30.
+
+---
+
+## Anti-patterns (explicit DO NOTs for tracking)
+
+- ❌ Writing log entries retroactively in bulk — lossy, dishonest
+- ❌ Marking `scan_performed: yes` without actually scanning
+- ❌ Skipping entries because "the task was obvious" — if it was truly
+   trivial, it doesn't trigger RAP; but most work is less trivial than
+   it feels
+- ❌ Adding fields outside the defined schema — breaks parseability
+- ❌ Flagging a gap on first occurrence of novel work — only flag if the
+   task recurs, else every new thing becomes a phantom gap
+- ❌ Treating the log as blame infrastructure — it's a signal system,
+   not a performance review
+
+---
+
 ## Dispatch flow architecture — two-step (v12.1 forward)
 
 **Discovered during v12 network capture review**:
