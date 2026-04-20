@@ -1,5 +1,26 @@
 # COMMAND — Current State
-Last updated: 260420 (gap-flagger installed + first monthly review executed)
+Last updated: 260420 (agents_protocol_check constraint fix — api_proxy added)
+
+## agents_protocol_check Constraint Fix — SHIPPED (84b1a4b, 260420)
+Session: [GL | OPS | agents_protocol_check Fix | 260420]
+Commit: 84b1a4b → github.com/jglobalink2024/command-app main
+
+**Problem:** `UPDATE agents SET protocol = 'api_proxy' WHERE workspace_id = 'ws-1776139325700'` failed with ERROR 23514.
+Constraint defined in `20260329120000_agents_vendor_protocol_audit_dna.sql` allowed only `('manual','webhook','api_poll','mcp','custom')` — `api_proxy` was added to app code in commit a50ffa4 but the constraint was never updated.
+
+**Fix:**
+- Migration created: `20260416100001_add_api_proxy_protocol.sql`
+- Drops and re-adds `agents_protocol_check` with `api_proxy` included
+- PENDING_ACTIONS.md updated with SQL item (Jason applies manually in Supabase SQL Editor)
+
+**Allowed values after migration:** `manual`, `webhook`, `api_poll`, `mcp`, `custom`, `api_proxy`
+
+**Jason's next step:** Run the SQL block in Supabase SQL Editor (ycxaohezeoiyrvuhlzsk):
+1. DROP + re-ADD constraint (migration file)
+2. `UPDATE agents SET protocol = 'api_proxy' WHERE workspace_id = 'ws-1776139325700'`
+3. Verify SELECT shows all 3 agents (Claude-1 / GPT-4-1 / Perplexity-1) at `api_proxy`
+
+---
 
 ## gap-flagger Agent — BUILT + FIRST REVIEW COMPLETE (260420)
 Session: [GL | AGENTS | gap-flagger Install · First Review | 260420]
