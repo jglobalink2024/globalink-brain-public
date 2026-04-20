@@ -1,5 +1,13 @@
 # COMMAND — Current State
-Last updated: 260420 (brain-committer build)
+Last updated: 260420 (brain-committer pipeline test)
+
+## brain-committer pipeline test — PASS (260420)
+Session: [GL | BRAIN | Pipeline Test · Closeout | 260420]
+
+- Test note appended to `command/research.md` via brain-committer agent (commit `95f5d41`)
+- Verified agent flow: append → stage specific file → commit with `brain: ... [via: CC]` → push
+- No frozen symphony files or `gl/entities.md` touched; no `git add .`
+- Next: no follow-up required — pipeline confirmed operational
 
 ## cc-prompt-architect Agent — BUILT + TESTED (260420)
 Session: [GL | AGENTS | cc-prompt-architect Build · Test Activation | 260420]
