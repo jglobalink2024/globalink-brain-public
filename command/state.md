@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260419
+Last updated: 260420
 
 ## Symphony v11 Full Production QA Sweep — COMPLETE (4822016, 260417)
 Session: [GL | QA | Symphony v11 Full Run · Billing Tier Mismatch | 260417]
@@ -512,6 +512,25 @@ Session: GL | COMMAND | Migration Log · Vercel Env Audit · Prompt Injection | 
    - Draft email to security@vercel.com prepared for Jason to send.
    - PENDING action: Jason sends the security report; do NOT install the
      suggested plugin until Vercel confirms it's legitimate.
+
+## BILL-02 Fix — SHIPPED (3593d49, 260420)
+Session: GL | QA | BILL-02 Billing Tier Mismatch Fix | 260420
+Commit: 3593d49 → github.com/jglobalink2024/command-app main
+
+Fixed billing page tier mismatch (Symphony v11 MAJOR finding):
+- Removed phantom "Studio $349" tier (no Stripe product, not on /pricing)
+- Added Founding Member Pro $99 and Agency $799 tiers (were missing)
+- Fixed "Current plan" label — now computed from workspace.subscriptionStatus +
+  isFoundingMember + planTier; no longer hardcoded to "Pro"
+- FM tier routed to /api/stripe/checkout (founding_member plan) — separate from Standard Pro
+- Agency tier routes to contact mailto (no self-serve checkout)
+- Added GlossaryTerm wraps for Pilot, Agent, Operator on billing page
+- Added "Pilot" + "Operator" to lib/glossary.ts (was missing both)
+- Added [data-glossary] CSS rule to globals.css (MINOR-TOOLTIP-STYLE global fix)
+- PlanTier type updated to include "founding_member"; Workspace.plan union updated
+
+TypeScript: exit 0 | ESLint: 0 errors | preflight.ps1: PASS
+Post-deploy browser verify: PENDING (see PENDING_ACTIONS.md)
 
 ## Next Session Priorities
 1. Send Vercel security email re: prompt-injection payload in `vercel env ls` (draft ready)
