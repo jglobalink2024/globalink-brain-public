@@ -1,5 +1,5 @@
 # COMMAND — Build Patterns
-Last updated: 260416
+Last updated: 260422
 
 ## Concurrent CC Sessions
 Safe when file surfaces confirmed non-overlapping.
@@ -533,6 +533,59 @@ persistence) or discoverability, not for the core handoff claim.
 All symphonies v12.1 onward. v12 proof files stay as historical record;
 they're accurate about the evidence they captured, but the scoring on
 J2 shallow cells was lenient.
+
+---
+
+## Working-tree drift detection (260422 lesson)
+
+Context: sonar-pro model name fix was made in a CC session, saved
+to local filesystem, but NEVER committed. Subsequent sessions saw
+`git log` clean and reported "code already has sonar-pro" (true
+locally, false on deployed remote). Three layers of staleness
+(working tree vs remote vs Vercel vs browser cache) compounded to
+produce an error that looked like a code bug but was actually a
+deployment gap.
+
+Rules going forward:
+1. Any CC session that modifies code MUST end with `git status`
+   output in the session report — confirming clean tree or listing
+   uncommitted files
+2. State reports must include both `git log -1` AND `git status`
+3. When debugging deployed behavior, verify what's actually running:
+   `vercel inspect [url] | grep commit`
+4. Do not trust "locally the code says X" — only trust "remote main
+   HEAD says X + Vercel production deploys from that commit + browser
+   loaded the post-deploy bundle"
+5. CC sessions that end with dirty working tree are INCOMPLETE even
+   if their task succeeded — working-tree changes are time bombs
+   for future sessions
+
+---
+
+## Multi-layer staleness compounding (260422 lesson)
+
+Context: During 260422 product diagnosis, a single bug symptom
+(Perplexity returning "Invalid model 'llama-3.1-sonar-large-128k-online'")
+had THREE independent staleness layers:
+
+Layer 1: Local working tree had fix (committed Apr 20 by CC session)
+Layer 2: Remote main branch had old value (fix never pushed)
+Layer 3: Vercel production pulled from old remote
+Layer 4: Browser served cached JS bundle from old deploy
+
+Any ONE of these being "fixed" was not sufficient. All four had
+to resolve in sequence. Prior CC session checked Layer 1 only,
+declared fix complete, left the rest stale.
+
+Debug checklist for "code says X but behavior says Y":
+1. git status — working tree clean?
+2. git log -1 — what's on local HEAD?
+3. git ls-remote origin main — what's on remote HEAD?
+4. vercel inspect [production-url] — what commit is deployed?
+5. Hard refresh browser (Ctrl+Shift+R) — fresh bundle loaded?
+
+If any of steps 1-5 surfaces a mismatch, the bug is staleness not
+code logic. Fix the mismatch before trying to fix the code.
 
 ---
 

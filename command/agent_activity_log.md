@@ -1,7 +1,7 @@
 # Agent Activity Log
 [PERSISTENT]
 Canonical location: globalink-brain/command/agent_activity_log.md
-Last updated: 260420
+Last updated: 260422
 Format: YAML frontmatter per entry, reverse-chronological (newest on top)
 
 ---
@@ -44,6 +44,30 @@ Optional fields:
 ---
 
 ## Entries
+
+---
+date: 260422
+session_type: build
+vehicle: cc + chat
+task: Fixed 4 compounding bugs blocking product execution; verified
+  product thesis end-to-end
+scan_performed: yes
+activated: brain-committer (this session)
+why: v12.1 QA revealed COMMAND was generating manual-relay briefs
+  not auto-executing; 5-hour diagnostic sprint found 4 gaps:
+  (1) agents_protocol_check constraint missing api_proxy
+  (2) executeTask.ts no pooled key fallback
+  (3) stranded working-tree sonar-pro fix never pushed
+  (4) PPLX_API_KEY vs PERPLEXITY_API_KEY name mismatch
+outcome: shipped
+efficiency_gain: critical (unblocks every downstream launch gate)
+gap_flagged: 2 new brain patterns lessons on working-tree drift +
+  multi-layer staleness
+related_commits: 84b1a4b, 0edc12d, 4b54855
+notes: |
+  Perplexity-1 executed research task, 647 tokens, 5066ms, $0.02
+  real burn. Output rendered in-app with Chain button. First time
+  product has actually delivered on its thesis.
 
 ---
 date: 260420

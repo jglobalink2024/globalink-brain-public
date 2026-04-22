@@ -1,5 +1,50 @@
 # COMMAND — Current State
-Last updated: 260422 (sonar-pro model fix + task cancellation committed and deployed)
+Last updated: 260422
+
+## 260422 — Product Thesis Proven End-to-End
+
+Session outcome: COMMAND executed first real research task fully
+in-product. Perplexity-1 received dispatch, api.perplexity.ai POST
+fired, 647-token research response rendered inside COMMAND UI with
+model/tokens/timing metadata, "Chain to next agent →" button
+surfaced, "Re-run" and "Copy" actions available.
+
+### Fixes applied in this session
+- Commit 84b1a4b — Supabase `agents_protocol_check` constraint
+  migration (added `api_proxy` to allowed values)
+- Commit 0edc12d — executeTask pooled key fallback (getPooledKey
+  helper, PPLX_API_KEY ↔ PERPLEXITY_API_KEY compat)
+- Commit 4b54855 — stranded working-tree fix (sonar-pro model name,
+  5 files bundled after prior session left them uncommitted)
+- Supabase UPDATE flipping Claude-1 / GPT-4-1 / Perplexity-1 to
+  protocol = 'api_proxy' on workspace ws-1776139325700
+- Vercel env: new COMMAND-PROD-ANTHROPIC Anthropic API key added
+  under ANTHROPIC_API_KEY var
+
+### Known bugs (non-blocking)
+- `/api/agents/refine` returns 422 (Anthropic key not resolving on
+  refine path — may not use getPooledKey helper)
+- `audit_ledger` POST returns 409 Conflict on dispatch (duplicate
+  entry — store estimate write collides with afterLLMCall actual
+  write)
+- Left sidebar shows agent as "Working..." persistently after
+  task completes (UI state not clearing)
+
+### Jason's open questions (for next session)
+- Handoff UX: where does user specify next agent's task?
+- Chain timing: when does handoff auto-trigger?
+- Sidebar status persistence: UI bug or DB state issue?
+
+### Current live state
+- 3 agents provisioned + configured with api_proxy protocol
+- Pooled keys (COMMAND env vars) powering all dispatches
+- $10 starter credit budget tracking real spend
+- Output rendering inside COMMAND (Option B layout per Jason pref)
+- BYOK override path still works (workspace key takes priority)
+- v12.1 verdict stays SHIP BLOCKED until v12.2 verifies C3 with
+  real output now observable
+
+---
 
 ## Sonar Model Fix + Task Cancellation — SHIPPED (4b54855, 260422)
 Session: [GL | COMMAND | Sonar Model Audit · Fix | 260422]
