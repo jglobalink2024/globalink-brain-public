@@ -1,6 +1,35 @@
 # COMMAND — Current State
 Last updated: 260422
 
+## 260422 — Ops: Mandatory Brain Close Protocol + brain-sync.sh
+
+Session: [GL | OPS | Brain Close Protocol · brain-sync.sh | 260422]
+
+### What changed this session
+
+**Root CLAUDE.md (GlobalInk Repos root) — updated on disk (unversioned)**
+- Added `## MANDATORY SESSION CLOSE PROTOCOL` section before all other sections
+- Content: 4-step close checklist (state.md update → brain-sync.sh → brain commit/push → clean tree confirm)
+- Root folder has no `.git` — file exists on disk but is not tracked by any repo
+- Recommendation logged: track via globalink-brain or init root git (decision deferred to Jason)
+
+**command-app: brain-sync.sh — CREATED + COMMITTED**
+- File: `command-app/command-app/brain-sync.sh`
+- Outputs to stdout: current YYMMDD date, state.md template block with 4 placeholders, last 5 git commits
+- Made executable (chmod +x)
+- Bundled into existing commit 7330605 (alongside pipeline bug fixes from prior CC session)
+- Already pushed to origin/main — tree clean
+
+### Known gaps / open items
+- Root CLAUDE.md versioning: no git repo at GlobalInk Repos root — file is unversioned
+  Options: (A) copy to globalink-brain/gl/claude-root.md, (B) init root git, (C) leave unversioned
+  Decision deferred to Jason
+
+### Next session priorities (carry-forward from prior)
+- No new priorities added this session — carry prior list forward unchanged
+
+---
+
 ## 260422 — Pipeline Bug Sprint: 4 Fixes Shipped (7330605)
 
 Session: [GL | COMMAND | Pipeline Fixes · Chain Trigger · Audit Ledger | 260422]
