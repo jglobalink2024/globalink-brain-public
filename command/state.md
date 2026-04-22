@@ -1,6 +1,35 @@
 # COMMAND — Current State
 Last updated: 260422
 
+## 260422 — Ops: HEARTH + PL Brain Propagation Pre-flight (DEFERRED)
+
+Session: [GL | OPS | Brain Propagation Pre-flight · HEARTH + PL | 260422]
+
+### What happened this session
+Pre-flight scan run for HEARTH + PL brain-close protocol propagation task.
+No files written — task halted at PL product repo confirmation gate per instructions.
+
+### Repo status confirmed
+- `hearth` product: ~/hearth — EXISTS, clean (untracked: doctrine/brain-audit-260422.md)
+- `hearth-brain`: MISSING — needs `gh repo clone jcameron52061/hearth-brain ~/hearth-brain`
+- PL product candidate: `C:/Users/jdavi/OneDrive/Desktop/Phase Line Repos/azimuth` — EXISTS, ahead of origin by 1 commit, untracked CLAUDE.md. Remote: jphaselinellc2018/azimuth
+- `phase-line-brain`: `C:/Users/jdavi/OneDrive/Desktop/GlobalInk Repos/phase-line-brain` — EXISTS, ahead of origin by 1 commit on master
+
+### Blocker
+Stopped to confirm: Is `azimuth` the correct PL product repo for this task? Also found `phaselinellc` (static site, jphaselinellc2018/phaselinellc). Jason closed out before confirming.
+
+### Next session — resume this task
+1. Jason confirms: azimuth = PL product repo (or corrects)
+2. Clone hearth-brain: `gh repo clone jcameron52061/hearth-brain ~/hearth-brain`
+3. Execute all 4 Changes per original task prompt:
+   - CHANGE 1: Add session-close section at TOP of hearth/CLAUDE.md and azimuth/CLAUDE.md
+   - CHANGE 2: Create brain-sync.sh in both product repos (model: command-app/command-app/brain-sync.sh)
+   - CHANGE 3: Create BRAIN_HOW_IT_WORKS.md in hearth-brain and phase-line-brain
+   - CHANGE 4: Create README.md in hearth-brain and phase-line-brain
+4. Commit sequence: product repos first, then brain repos (4 commits total)
+
+---
+
 ## 260422 — Ops: Mandatory Brain Close Protocol + brain-sync.sh
 
 Session: [GL | OPS | Brain Close Protocol · brain-sync.sh | 260422]
