@@ -1,6 +1,50 @@
 # COMMAND — Current State
 Last updated: 260422
 
+## 260422 — Pipeline Bug Sprint: 4 Fixes Shipped (7330605)
+
+Session: [GL | COMMAND | Pipeline Fixes · Chain Trigger · Audit Ledger | 260422]
+
+### Fixes applied this session (commit 7330605)
+
+**Phase 1 — Chain Auto-Trigger**
+- `executeTask.ts` — agent set to `status='active'` immediately after key
+  resolution, before any vendor call. Chained tasks now transition
+  IDLE → ACTIVE automatically via `autoHandoff` without user action.
+
+**Phase 2 — Sidebar Status Clearing**
+- `executeTask.ts` — success branch now sets `agents status='idle',
+  current_task=null` alongside task completion update. Error branch
+  already had this; success branch was missing it.
+- Sidebar "Working..." clears within one polling cycle — no page refresh.
+
+**Phase 3 — audit_ledger 409 Conflict**
+- All 7 `audit_ledger` `.insert()` calls in `executeTask.ts` and
+  `autoHandoff.ts` changed to `.upsert({}, { onConflict: 'id',
+  ignoreDuplicates: true })`. Concurrent writes from executeTask +
+  autoHandoff in the same tick no longer produce 409s.
+
+**Phase 4 — /api/agents/refine 422**
+- `app/api/agents/refine/route.ts` — added `getPooledKey('anthropic')`
+  fallback. Workspaces without BYOK Anthropic key now hit pooled key
+  instead of returning 422.
+
+TypeScript: exit 0 | preflight.ps1: PASS | Pushed → Vercel auto-deploy
+
+### Known bugs (non-blocking, previously noted, now fixed)
+- ~~`/api/agents/refine` returns 422~~ → FIXED
+- ~~`audit_ledger` 409 Conflict on dispatch~~ → FIXED
+- ~~Left sidebar persists "Working..." after task completes~~ → FIXED
+- Chain auto-trigger required manual user action → FIXED
+
+### Current live state
+- All 3 known pipeline bugs (409, 422, sidebar) resolved
+- Chain auto-trigger now fully autonomous IDLE → ACTIVE → IDLE
+- 3 agents provisioned + api_proxy protocol configured
+- BYOK override path still works (workspace key takes priority)
+
+---
+
 ## 260422 — Product Thesis Proven End-to-End
 
 Session outcome: COMMAND executed first real research task fully
