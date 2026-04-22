@@ -1,148 +1,161 @@
 # GlobaLink Brain — Multi-Variant Sync Protocol
-Last updated: 260416
+# [PERSISTENT]
+Last updated: 260422
 
 ## Intent
 
-Every Claude variant (Code, chat, Cursor) reads from and writes to the same
-brain. Single source of truth. No variant is a second-class citizen.
-Jason is never the action officer for syncing.
+Every Claude variant (Code, Chat, Cursor, Chrome) reads from and writes to the correct
+brain for the entity context of the session. Single source of truth per entity.
+Jason is never the action officer for syncing. No manual paste paths.
 
 ---
 
-## Access Architecture
+## Entity → Brain Mapping (HARD WALL)
 
-```
-Private brain repo (jglobalink2024/globalink-brain)
-       ↑↓ git push/pull                         ↑↓ local files + git
-   Claude Code                                      Cursor
-  (local filesystem)                           (local filesystem)
-          ↑
-          | git commit (ops-watchdog drains queue daily at 7:01 AM)
-          |
-  Supabase brain_queue table  ←── INSERT ───  Claude chat (claude.ai)
-  (ycxaohezeoiyrvuhlzsk)           Supabase connector (already installed)
-          ↓
-  Public mirror (~16s after each push)
-  jglobalink2024/globalink-brain-public
-  (read-only fallback for session opens)
-```
+| Entity | Brain repo | GitHub account | Supabase relay |
+|--------|-----------|----------------|----------------|
+| GlobaLink LLC (GL) | jglobalink2024/globalink-brain | jglobalink2024 | gl-brain (wlhodjpgidopmtkqxtss) |
+| Phase Line LLC (PL) | jphaselinellc2018/phase-line-brain | jphaselinellc2018 | pl-brain (hrmlntvdbvxypversnfv) |
+| Personal / HEARTH | jcameron52061/hearth-brain | jcameron52061 (temp) | hearth-brain (jexhxufepfcdhbpkvjck) |
 
-**Write latency for Claude chat:** max 24 hours (next watchdog run at 7:01 AM).
-Jason can trigger `/ops-check` at any time for an immediate drain.
+**These walls are absolute. Never write GL content into PL or HEARTH brain, or vice versa.**
+When in doubt about which brain a piece of content belongs to: GL is business/product,
+PL is company (dormant), HEARTH is personal/operator. Not three versions of the same thing.
 
 ---
 
-## READ Protocol (all variants)
+## Write Paths
 
-**Priority order:**
-1. **Local filesystem** (CC / Cursor) → `C:\Users\jdavi\OneDrive\Desktop\GlobalInk Repos\globalink-brain\`
-2. **GitHub Integration connector** (Claude chat) → attach brain files from private repo as context
-3. **Fallback** → public mirror URLs (raw.githubusercontent.com/jglobalink2024/globalink-brain-public/main/...)
+### Claude Code / Cursor (primary — all three brains)
 
-**Session Open — files to read:**
-```
-command/state.md
-command/decisions.md
-command/patterns.md
-command/killed.md
-command/file-lifecycle.md
-gl/principles.md
-gl/brain-sync-protocol.md   ← this file
-```
-
----
-
-## WRITE Protocol
-
-### Claude Code / Cursor (synchronous — immediate)
-1. Write/edit local files in `globalink-brain\`
+1. Write/edit local brain files in the appropriate local repo
 2. `git add <specific files>` (never `git add .`)
 3. `git commit -m "brain: [description] [via: CC]"`
 4. `git push`
-5. Public mirror syncs automatically (~16s)
 
-### Claude chat (async — via Supabase queue)
-At session close, for each brain file that needs updating, INSERT into `brain_queue`:
+Local paths:
+- GL: `C:\Users\jdavi\OneDrive\Desktop\GlobalInk Repos\globalink-brain\`
+- PL: `C:\Users\jdavi\OneDrive\Desktop\GlobalInk Repos\phase-line-brain\`
+- HEARTH: `C:\Users\jdavi\OneDrive\Desktop\GlobalInk Repos\hearth-brain\`
+
+Commit format: `brain: [description] [via: CC | cursor | watchdog←chat]`
+
+### Claude Chat → GL brain only (async — via brain_queue)
+
+At session close, for each GL brain file that needs updating:
 
 ```sql
 INSERT INTO brain_queue (file_path, operation, section_header, content, via)
 VALUES (
-  'command/state.md',          -- target file relative to brain repo root
-  'append',                    -- 'append' or 'full_replace'
-  'Next Session Priorities',   -- ## header to append after (null = end of file)
-  '[the content to add]',      -- the actual update text
-  'chat'                       -- always 'chat' for Claude chat sessions
+  'command/state.md',       -- target file relative to globalink-brain root
+  'append',                 -- 'append' | 'full_replace'
+  'Session Log',            -- ## header to append after (null = end of file)
+  '[content to add]',       -- the actual update text
+  'chat'
 );
 ```
 
-**ops-watchdog drains the queue** at 7:01 AM daily (Step 7):
-- Reads all `WHERE committed_at IS NULL` rows
-- Applies each update to the brain file (append or replace)
-- Commits to git: `brain: drain queue — [N] update(s) [via: watchdog←chat]`
-- Marks rows as committed with the git SHA
+**brain_queue is in command-gl Supabase (ycxaohezeoiyrvuhlzsk) — the GL project DB.**
+ops-watchdog drains it at 7:01 AM daily → commits to globalink-brain → git push.
+Trigger early drain: `/ops-check`
 
-**Trigger immediate drain:** run `/ops-check` — watchdog executes Step 7 on demand.
+### Claude Chat → PL / HEARTH brains
 
-### Commit format (all variants)
+PL is dormant — no active chat sessions target it. CC/Cursor is the only write path.
+HEARTH is personal — typically Jason works HEARTH content via CC locally, not Claude chat.
+
+**If a Claude chat session ever needs to write to PL or HEARTH:**
+Output a brain update block at the end of the session for CC to commit in the next session.
+Format:
 ```
-brain: [description] [via: CC | cursor | watchdog←chat]
+[BRAIN WRITE REQUIRED]
+Brain: hearth | pl
+File: state.md
+Operation: append | full_replace
+Content:
+[content here]
+[END BRAIN WRITE]
 ```
+CC will detect this block at session open and apply it before proceeding.
 
 ---
 
-## brain_queue Table Schema
+## Read Paths
 
-```sql
--- Table: brain_queue (in Supabase project ycxaohezeoiyrvuhlzsk)
-id            uuid        PK, auto
-created_at    timestamptz DEFAULT now()
-file_path     text        -- relative path in brain repo, e.g. 'command/state.md'
-operation     text        -- 'append' | 'full_replace'
-section_header text       -- for append: ## header to insert after (null = end of file)
-content       text        -- the content block to write
-via           text        -- 'chat' | 'cursor' | 'CC'
-committed_at  timestamptz -- null = pending; set when watchdog commits
-commit_sha    text        -- git SHA after commit
-```
+### Claude Code / Cursor
+Local filesystem — direct file access. Always current.
 
-Migration: `command-app/supabase/migrations/20260416100000_brain_queue.sql`
-RLS: disabled — internal ops table, not customer data.
+### Claude Chat (GL sessions)
+**Priority order:**
+1. GitHub Integration connector → attach brain files from jglobalink2024/globalink-brain
+2. Fallback: public mirror (jglobalink2024/globalink-brain-public) raw URLs
+
+**Auto-fetch at session open (STEP 0):** `gl/format.md` — defines JRF response format.
+Then fetch the POINTER file for the session's project target.
+
+### Claude Chat (HEARTH sessions)
+Fetch from jcameron52061/hearth-brain via GitHub MCP or HEARTH project knowledge files.
+
+### Claude Chat (PL sessions)
+PL is dormant. If a PL session is needed: fetch from jphaselinellc2018/phase-line-brain.
 
 ---
 
-## SESSION CLOSE (all variants)
+## Relay Infrastructure (observability — not a write path)
+
+Each brain repo has a GitHub webhook → Supabase Edge Function (`brain-relay`) that captures
+commit metadata into a `brain_commits` table. This is read-only observability — you do not
+write TO the relay. The relay captures what you write via git push.
+
+| Brain | Webhook ID | Relay URL |
+|-------|-----------|-----------|
+| GL | 608905295 | wlhodjpgidopmtkqxtss.supabase.co/functions/v1/brain-relay |
+| PL | 608905468 | hrmlntvdbvxypversnfv.supabase.co/functions/v1/brain-relay |
+| HEARTH | 608905648 | jexhxufepfcdhbpkvjck.supabase.co/functions/v1/brain-relay |
+
+Relay `brain_id` values: `"gl"`, `"pl"`, `"hearth"` (set by env var at deploy time).
+Historical commits (pre-relay) were backfilled 260422 with empty file arrays.
+
+---
+
+## Session Close Checklist (all variants)
 
 Before announcing session complete:
-
 1. Identify which brain files changed this session
-2. Write updates via the available path:
-   - CC/Cursor: local file → git push (immediate)
-   - Chat: INSERT into brain_queue (async, committed by watchdog)
-3. Confirm commit SHA (CC) OR confirm INSERT succeeded (chat)
-4. Suggest thread name per canonical format
+2. Write updates via the correct path:
+   - CC/Cursor: local file → git push (immediate, all 3 brains)
+   - Chat (GL): INSERT into brain_queue (async, committed by watchdog)
+   - Chat (PL/HEARTH): output [BRAIN WRITE REQUIRED] block
+3. Confirm commit SHA (CC) OR INSERT success (chat)
+4. Suggest thread name: `[GL | WORKSTREAM | Topic · Topic | YYMMDD]`
 
 Never announce "done" until brain updates are queued or committed.
 
 ---
 
-## SETUP STATUS
+## Common Failures (do not repeat)
 
-| Variant | Read | Write | Setup needed |
-|---------|------|-------|-------------|
-| Claude Code | Local filesystem | git push | None — works now |
-| Cursor | Local filesystem | git push | None — works now |
-| Claude chat | GitHub Integration (read-only) + public mirror | Supabase brain_queue INSERT | Apply migration in SQL Editor |
-
-**One-time Jason action:** Apply `20260416100000_brain_queue.sql` in Supabase SQL Editor.
-That's the only setup step remaining. Everything else is already wired.
+| Failure | What happened | Rule |
+|---------|--------------|------|
+| GitHub Integration write | GH Integration is READ-ONLY. Commits via it don't work. | Chat writes go to brain_queue only. |
+| `git add .` in brain repo | Staged unintended files including secrets. | Always stage specific files by name. |
+| Output block fallback | Jason had to paste output into next session. | Never use. brain_queue exists for a reason. |
+| CC local memory | Wrote memory to `~/.claude/projects/...` instead of brain repo. | All persistent memory → brain repo only. |
+| Wrong brain for entity | GL session wrote to HEARTH brain by mistake. | Check entity context at session start. |
+| Relay as write path | Tried to write TO the relay directly. | Relay is capture-only. Write via git push. |
 
 ---
 
-## ANTI-PATTERNS (never do these)
+## brain_queue Schema (GL Supabase — ycxaohezeoiyrvuhlzsk)
 
-- Never write brain content to CC local memory (`C:\Users\jdavi\.claude\projects\...`)
-- Never skip the close commit/queue because "it was a small session"
-- Never use `git add .` to stage brain commits — specific files only
-- Never commit to `globalink-brain-public` directly — it is auto-synced, not manually written
-- Never write GL entity-sensitive content (`gl/entities.md`) via the public mirror path
-- Never use the "output block fallback" (Jason as action officer) — Supabase queue replaces it
+```sql
+id            uuid        PK, auto
+created_at    timestamptz DEFAULT now()
+file_path     text        -- relative path in globalink-brain, e.g. 'command/state.md'
+operation     text        -- 'append' | 'full_replace'
+section_header text       -- ## header to insert after (null = end of file)
+content       text        -- content block to write
+via           text        -- 'chat' | 'cursor' | 'CC'
+committed_at  timestamptz -- null = pending; set when watchdog commits
+commit_sha    text        -- git SHA after commit
+```
