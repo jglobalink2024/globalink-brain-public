@@ -1,5 +1,23 @@
 # COMMAND — Current State
-Last updated: 260421 (task cancel button + cancelled status + Working… cleared on error)
+Last updated: 260422 (sonar-pro model fix + task cancellation committed and deployed)
+
+## Sonar Model Fix + Task Cancellation — SHIPPED (4b54855, 260422)
+Session: [GL | COMMAND | Sonar Model Audit · Fix | 260422]
+
+**Root cause found:** `executeTask.ts` Perplexity path still used `llama-3.1-sonar-large-128k-online` in the last committed version (`0edc12d`). The `sonar-pro` fix existed in the working tree but was never staged or committed. Vercel was deploying the old code.
+
+**Fix committed (4b54855):**
+- `lib/pipeline/executeTask.ts` — `modelUsed = 'sonar-pro'` (replaces retired `llama-3.1-sonar-large-128k-online`) + large rewrite
+- `lib/store.ts` + `lib/types.ts` — `"cancelled"` added to `TaskStatus` union
+- `lib/command-data.ts` — `cancelled: "cancelled"` added to `statusMap`
+- `app/router/page.tsx` — Cancel button UI for queued/active tasks; "Cancelled" badge
+
+TypeScript: exit 0 | preflight.ps1: PASS | Pushed → Vercel auto-deploy triggered
+
+**Audit findings (all clear):**
+- DB: `agents` table `model_label = 'sonar-pro'` for Perplexity-1 — was already clean
+- Code: no live references to old model name (all hits were docs/evidence files)
+- Root cause was purely C — uncommitted working-tree change
 
 ## Task Cancel + Agent Status Fix — SHIPPED (260421)
 Session: [GL | COMMAND | Task Cancel · Agent Status Fix | 260421]
