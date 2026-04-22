@@ -1,6 +1,37 @@
 # COMMAND — Current State
 Last updated: 260422
 
+## 260422 — Task Exec UX Sprint: 3 Fixes Shipped (6958255)
+
+Session: [GL | COMMAND | Task Exec UX · Manual Flow Hide · ETA Timer · Sidebar Idle Fix | 260422]
+
+### What changed this session
+
+**Phase 1 — Hide manual flow during automated execution**
+- `app/router/page.tsx` — Added `autoExecActive` state to `TaskBriefCard`
+- "Copy Task Brief" button + "Open [Agent] and paste this brief to begin." text: wrapped in `{!autoExecActive && (...)}` — hidden when panel is running or complete
+- "Mark In Progress" + "Mark Complete" buttons (and the manual completion panel): wrapped in `{!autoExecActive && (isComplete ? ... : ...)}` — hidden during automated execution
+- `TaskOutputPanel` → `onPanelStateChange` prop fires whenever `panelState` transitions; TaskBriefCard sets `autoExecActive = true` on `running` or `complete`
+
+**Phase 2 — Execution time estimate**
+- `components/tasks/TaskOutputPanel.tsx` — Added `vendorEta()` helper:
+  - Perplexity → `~10–20s` | OpenAI → `~15–30s` | Anthropic → `~10–20s`
+- Timer display now reads: `4.2s · est. 15–30s`
+- ETA appears immediately when execution starts
+
+**Phase 3 — Sidebar status not clearing (GPT-4-1 / any vendor)**
+- Root cause: Realtime subscription only active on dashboard page; router page execution didn't guarantee Realtime fired in time
+- Fix 1: `lib/pipeline/executeTask.ts` — added `console.log` before/after idle DB update in success branch (diagnostic)
+- Fix 2: `components/tasks/TaskOutputPanel.tsx` — after `setPanelState("complete")` and `setPanelState("error")`, calls `updateAgent(agentId, { status: "idle", currentTask: "" }, workspaceId)` directly on the Zustand store — bypasses Realtime round-trip entirely, fires immediately on the client
+
+TypeScript: exit 0 | ESLint: 0 errors | preflight.ps1: PASS | Pushed → Vercel auto-deploy
+
+### Known open items (carry-forward)
+- HEARTH + PL brain propagation task still blocked pending Jason confirmation of azimuth = PL repo
+- console.logs added to executeTask.ts are diagnostic — can be stripped after sidebar confirmed fixed
+
+---
+
 ## 260422 — Ops: HEARTH + PL Brain Propagation Pre-flight (DEFERRED)
 
 Session: [GL | OPS | Brain Propagation Pre-flight · HEARTH + PL | 260422]
