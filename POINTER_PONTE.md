@@ -1,32 +1,26 @@
 # Ponte Brain — Pointer
 [PERSISTENT]
-Last updated: 260421
+Last updated: 260422
 
-## Status: DEFERRED — repo not yet created
+## Current status: UNDER GL — no separate brain yet
 
-Ponte Serviços LTDA incorporates Jun–Jul 2026. The `ponte-brain` GitHub repo
-will be created at that time. Do not create it before incorporation.
+Ponte Serviços LTDA is a future Brazilian entity (CNPJ/LGPD — separate from FL EIN).
+Until incorporation and a deliberate extrication decision, Ponte content lives inside
+`globalink-brain/ponte/` under GL. No `ponte-brain` repo will be created before that.
 
-## Future brain repo (private) — NOT YET LIVE
-https://github.com/jglobalink2024/ponte-brain
-
-## Future brain repo (public mirror) — NOT YET LIVE
-https://github.com/jglobalink2024/ponte-brain-public
-
-## Archived content (local only)
+## Where Ponte lives now
 `C:\Users\jdavi\OneDrive\Desktop\GlobalInk Repos\globalink-brain\ponte\`
-Contains Phase 0 research files from pre-incorporation sessions.
-Read-only. Do not update until ponte-brain repo exists.
+Content is part of the globalink-brain repo. Update it here.
 
-## Hard wall
-Ponte Serviços LTDA is a separate Brazilian entity from GlobaLink LLC (Florida).
-CNPJ ≠ EIN. LGPD exposure is separate from US compliance posture.
-Never commingle Ponte data with GL, PL, or HEARTH brains.
+## Future path (TBD at incorporation)
+At incorporation, Ponte may be extricated into its own brain repo under its own account.
+That decision is deferred — do not pre-build.
 
-## Claude.ai project scope
-When Ponte project activates in Claude.ai, add this pointer file to project knowledge.
-Fetch from ponte-brain-public/main/state.md at session start once mirror is live.
+## Hard wall reminder
+Ponte will eventually have CNPJ ≠ EIN separation, LGPD ≠ US compliance posture.
+When extricated, enforce the same account-level wall as GL/PL/HEARTH.
 
 ## Correction history
-- 260420: POINTER_PONTE.md incorrectly pointed to globalink-brain as canonical home
-- 260421: Corrected — Ponte is separate legal entity, gets its own brain repo at incorporation
+- 260420: Incorrectly pointed to globalink-brain as canonical home (overturned 260421)
+- 260421: Incorrectly set as separate entity with own brain at incorporation (overturned 260422)
+- 260422: Final — Ponte under GL for now, extricate later if/when needed
