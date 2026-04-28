@@ -46,6 +46,15 @@ NEXT_PUBLIC_GL_INTERNAL removed
 Migration log updated
 CLI injection reported to Vercel
 
+## Session Log
+
+### 260428 — Layer 1 Brain Freshness Gate deployed
+Session: [GL/COMMAND | BRAIN OPS | Layer 1 Freshness Gate · POINTER_COMMAND v2 | 260428]
+- POINTER_COMMAND.md overwritten with v2 (84 ins / 19 del)
+- Freshness Gate: mandatory session-start check — fetches state.md with cache-bust, parses Last updated, shows 🟡/🔴 banner if stale
+- Routed through brain-committer agent (commit 5132856)
+- Public mirror verified live — gate section confirmed at head of file
+
 ## Active Fixes (from audit 260413 — still open)
 - Critical: "Run in [Agent]" button dead (StepDetailSidebar:551)
 - Critical: ROI tracker inflated baseline
