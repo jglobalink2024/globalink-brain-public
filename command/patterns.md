@@ -132,3 +132,8 @@ Writes to globalink-brain-public (public mirror).
 If mirror goes stale >48hrs: check Action run logs for failures.
 Node.js 20 deprecation: fix Action before Jun 2 2026.
 Add on-failure Brevo alert to catch silent failures early.
+
+## Content system pattern (260418)
+Batch + schedule + template + Claude co-write + byproduct capture.
+No daily creation. No blank-page drafting. System compliance
+delivers 3x/week output without discipline dependency.

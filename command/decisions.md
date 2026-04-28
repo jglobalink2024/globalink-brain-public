@@ -134,3 +134,22 @@ Decision: Gemini/cursor/custom vendors return pending
   status rather than null. UI shows "coming soon."
 Rationale: Returning null silently made Sandra think
   her Gemini agent was working when it wasn't.
+
+## 260418 — GTM primary motion: Community-first, not outreach-first
+Decision: LinkedIn community-first replaces Waalaxy as primary
+  top-of-funnel. Waalaxy demoted to research instrument (€49/mo).
+Rationale: Cold outreach yields 3-5 conversations/6wks — research
+  instrument, not growth engine. Community-led is fastest
+  rapid-growth lever for bootstrap solo founder.
+Cancel trigger: End of June; if zero discovery calls + zero
+  usable buyer-language quotes harvested, cancel Waalaxy.
+
+## 260418 — Pricing model: Flat + caps + overages (hybrid)
+Decision: Reject pure usage. Keep flat as primary. Add task caps
+  per tier with overage upsell to next tier. Introduce $29
+  Starter tier. Preserve $99 FM locked-rate cohort.
+Rationale: Sandra's mental model is flat (ChatGPT/Claude/Perplexity
+  all flat). Pure usage breaks conversion, kills engagement,
+  destroys FM offer, complicates forecasting.
+Revisit: Q3 2026 — credit packs if 3+ FM customers ask for
+  pay-as-you-go in discovery.

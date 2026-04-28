@@ -81,3 +81,8 @@ Reason: Maps to 5 existing prior art kills: Cognitive Stigmergy
 Biology language: Retired per SOP v8 Section 13.
 Pain story captured as discovery call ammunition.
 Revive condition: Never
+
+## 260418 — Pure usage-based pricing as primary model
+Killed. Row 3 pricing fits Row 3 buyers (developers). Sandra is
+Row 1/2 (operator). Cap + overage mechanism solves margin concern
+without changing primary model.

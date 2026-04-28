@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260428
+Last updated: 260418
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -142,6 +142,10 @@ T2 campaign: 193 contacts
 25 slots | $99/mo | Closes Sep 30 2026
 0 slots filled | Beta free until ~Aug 1
 Nothing charges until beta ends
+GTM primary motion: LinkedIn community-first (3x/week)
+Content prep window: Apr 20-30 (BEFORE SP arrival)
+Auto-publish window: May 1 - Jun 1
+Eric beta hard gate: triage Items 1-6 by May 3
 
 ## Gated to First Revenue
 Trademark COMMAND USPTO Class 42 (~$350)
