@@ -1,6 +1,27 @@
 # COMMAND — Current State
 Last updated: 260428
 
+## 260428 — Brain Staleness Investigation · Public Mirror Unarchived
+
+Session: [GL/BRAIN | OPS | Staleness Investigation · Public Mirror Fix | 260428]
+
+### What changed this session
+
+**Public mirror brain sync chain diagnosed and fixed**
+- Root cause: `globalink-brain-public` repo was archived on 260422, making it read-only
+- Sync Action was firing on every push but failing at "Commit and push to public mirror" step with `403: read-only`
+- 6 days of syncs silently dropped (260422 → 260428)
+- Fix: unarchived repo via GitHub API (`gh api -X PATCH -f archived=false`)
+- Re-ran last failed Action (run `25033408413`) — all steps passed
+- Verified: `command/state.md` on public mirror now shows `Last updated: 260428`
+- Secondary: Node.js 20 deprecation warning in sync Action — chip spawned to fix before June 2, 2026 deadline
+
+### Known open items (carry-forward)
+- CI action upgrade: `actions/checkout@v4` → Node.js 24 compatible (deadline: 260602)
+- HEARTH + PL brain propagation still blocked pending PL product repo confirmation
+
+---
+
 ## 260428 — Agency Channel Parked Play Filed to Brain
 
 Session: [GL/COMMAND | BRAIN | Agency Channel Parked Play · Brain Commit | 260428]
