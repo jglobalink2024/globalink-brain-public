@@ -59,6 +59,14 @@ Session: [GL/COMMAND | BRAIN OPS | Brain Catchup · RAP-B Pre-Scan Hook | 260428
 - ACTIVATION: requires `/hooks` reload OR fresh session — current session can't fire SessionStart
 - VERIFICATION TEST: in next session ask "what agents are available?" — if categorized list recited without running ls, hook works; if scan needed, escalate to UserPromptSubmit (populate oracle-preflight.sh stub)
 
+### 260428 — Layer 2 Brain Ops deployed
+Session: [GL/COMMAND | OPS | Layer 2 Deploy · Brevo Alert · Heartbeat Cron | 260428]
+- D1: POINTER_COMMAND.md v2 (Freshness Gate) uploaded to claude.ai COMMAND project knowledge — old v1 deleted, v2 (105 lines) confirmed persistent via page reload. DataTransfer JS injection used (Chrome ext file_upload blocked on hidden input).
+- D2: sync-public.yml "Notify on failure" Brevo alert step confirmed present + pushed (commit 0a5fb4e). Sync run 25036215409 passed in 15s on push.
+- D3: brain-heartbeat.yml cron corrected 13:00 → 12:00 UTC (EDT → BRT, São Paulo steady-state). Manual trigger run 25036290439 passed in 9s — log: "Last updated: 260428 (5 hours ago)". Brain fresh, no alert fired. Correct behavior.
+- BREVO_API_KEY: now added to globalink-brain repo secrets (push succeeded). Both workflows live.
+- brain-committer gap: .github/workflows/ out of append-only scope — committed directly per spec.
+
 ### 260428 — Layer 1 Brain Freshness Gate deployed
 Session: [GL/COMMAND | BRAIN OPS | Layer 1 Freshness Gate · POINTER_COMMAND v2 | 260428]
 - POINTER_COMMAND.md overwritten with v2 (84 ins / 19 del)
