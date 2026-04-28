@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260418
+Last updated: 260428
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -47,6 +47,13 @@ Migration log updated
 CLI injection reported to Vercel
 
 ## Session Log
+
+### 260428 — Layer 3.5 Config Version Control + POINTER v3 deploy
+Session: [GL/COMMAND | OPS | POINTER v3 Deploy · Config Backup Repo | 260428]
+- D1 (2a): POINTER_COMMAND.md v3 confirmed in globalink-brain (commit 38c8e81 from prior session); Downloads v3 matched repo exactly — no new commit needed
+- D1 (2b): POINTER_COMMAND.md v3 uploaded to claude.ai COMMAND project knowledge — React fiber injection + POST /docs 201. 163 lines, hasAutoCatchup:true, persistent via API GET. Old 162-line copy deleted; 2 accidental duplicates cleaned.
+- D1 (2c): cache-bust curl confirmed "Auto-catchup synthesis" in globalink-brain-public — ✅
+- D2: globalink-claude-config private repo created (github.com/jglobalink2024/globalink-claude-config) — 207 agents + 2 hooks + settings.json + .mcp.json. Commits caa7429 + 8e14ace. No secrets found (pre-add grep verified). Option B sync: ~/bin/claude-config-sync.sh live + tested. Hooked into ~/bin/closeout.
 
 ### 260428 — Retroactive 260418 brain writes (GTM motion + pricing)
 Session: [GL/COMMAND | BRAIN OPS | GTM Motion · Pricing Decision | 260428]
