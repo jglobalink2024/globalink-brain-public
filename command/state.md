@@ -48,6 +48,14 @@ CLI injection reported to Vercel
 
 ## Session Log
 
+### 260428 — Retroactive 260418 brain writes (GTM motion + pricing)
+Session: [GL/COMMAND | BRAIN OPS | GTM Motion · Pricing Decision | 260428]
+- state.md: Last updated set to 260418; FM Cohort section + GTM motion/content/Eric gate lines added
+- decisions.md: 2 entries appended — community-first replaces Waalaxy top-of-funnel; flat+caps+overages pricing (Sandra mental model, $29 Starter, FM $99 preserved)
+- patterns.md: content system pattern appended — batch/schedule/template/co-write/byproduct, no blank-page drafting
+- killed.md: pure usage-based pricing as primary model killed — Row 3 pricing for Row 3 buyers; cap+overage solves margin
+- Commit: a5d0204 | pushed to main
+
 ### 260428 — Brain catchup push + RAP-B SessionStart hook
 Session: [GL/COMMAND | BRAIN OPS | Brain Catchup · RAP-B Pre-Scan Hook | 260428]
 - Full brain catchup 260413→260428: 7 files replaced (commit 88083e7) — command/{state,decisions,patterns,killed,research}.md + gl/{principles,decisions}.md
