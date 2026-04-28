@@ -1,5 +1,14 @@
 # COMMAND — Decisions Register
-Last updated: 260420
+Last updated: 260427
+
+## 260427 — Agency Channel play PARKED
+Decision: Full game plan drafted, parked pre-execution.
+Reason: 35 days to first revenue. Eric/Grant/Richard are higher
+  EV than cold builder outreach. Cold-DMing 25 builders is
+  sideways motion that won't close before June 1.
+Reactivation gate: 260512 OR first paying customer.
+Full plan: command/parked-plays/agency-channel-260427.md
+Revisit: After Eric beta live OR first paying customer.
 
 ## 260422 — audit_ledger writes use upsert + ignoreDuplicates, not insert
 Decision: All `audit_ledger` inserts in `executeTask.ts` and `autoHandoff.ts`

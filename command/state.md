@@ -1,5 +1,69 @@
 # COMMAND — Current State
-Last updated: 260422
+Last updated: 260428
+
+## 260428 — Agency Channel Parked Play Filed to Brain
+
+Session: [GL/COMMAND | BRAIN | Agency Channel Parked Play · Brain Commit | 260428]
+
+### What changed this session
+
+**Agency Channel game plan parked pre-execution — full plan preserved in brain**
+- Created `command/parked-plays/agency-channel-260427.md` — complete game plan from chat session `[GL | STR | Agency Accelerants Game Plan · OpenClaw Channel Strategy | 260427]`
+  - 5 task drafts (3 DM hooks, positioning sweep CC prompt, T1.5 Notion spec, Bennett intel template, Phase 3 candidates)
+  - 3 hook variants: Handoff / Resell / Operator — paste-ready for LinkedIn DMs
+  - Full OpenClaw intel baseline (347K stars, Cisco exfil finding, Peter Steinberger → OpenAI)
+  - Phase 3 feature candidates: OpenClaw Bridge, Agency Multi-Tenant, Cockpit Handoff Doc, Skill Sandbox, White-label
+  - Reactivation checklist — 7-step gate to run cold
+- Updated `command/decisions.md` — new entry at top, `Last updated` bumped to 260427
+- Commit pushed: `c89573f`
+
+### Reactivation gate
+Trigger: **260512 OR first paying customer** — whichever comes first.
+Any Claude variant reading the brain will surface this plan automatically on that date.
+
+### Known open items (carry-forward)
+- HEARTH + PL brain propagation still blocked pending azimuth = PL product repo confirmation
+- Positioning sweep (Task 2 from parked play) not yet run — deferred with the rest of the plan
+
+---
+
+## 260427 — _SPEC README Verification (no action required)
+
+Session: [GL/ORACLE-KB | BRAIN | _SPEC README Verification | 260427]
+
+### What happened this session
+
+Verified `globalink-brain/_SPEC/README.md` against the CC paste pack task from Cowork session `[GL/ORACLE-KB | BRAIN | Doctrine v1.2 Deploy · globalink-brain Bootstrap | 260427]`.
+
+- File exists, content is exact match — task had already been executed by prior Cowork session
+- No write, no commit, no Rule 8 escalation needed
+- No action taken
+
+---
+
+## 260427 — Agent Library Baseline + RAP-B Gate Update
+
+Session: [GL/COMMAND | BRAIN | Agent Library Baseline · RAP-B Gate | 260427]
+
+### What changed this session
+
+**Agent Library Baseline Scan pushed to globalink-brain**
+- Cleared stale `.git/index.lock` (left by prior Cowork session)
+- Staged and pushed 4 new files to `globalink-brain/main` (commit `47a32f1`, 999 insertions):
+  - `01_KNOWLEDGE_BASE/MISC/agent-library-inventory-v01.md`
+  - `01_KNOWLEDGE_BASE/MISC/agent-library-killed.md`
+  - `01_KNOWLEDGE_BASE/MISC/agent-library-watchlist.md`
+  - `01_KNOWLEDGE_BASE/MISC/agent-library-scans/260427_baseline-scan_v01.md`
+
+**Global CLAUDE.md Gate 1B updated**
+- Gate renamed: "Right Skills?" → "Right Skills & Agents?"
+- Added AGENTS block with 4 trigger conditions (Explore subagent, parallel agents, specialized subagent types, context protection)
+- Required output label updated: `RAP-B: [skills / agents loading or none required]`
+
+### Known open items (carry-forward)
+- HEARTH + PL brain propagation still blocked pending azimuth = PL product repo confirmation
+
+---
 
 ## 260422 — Task Exec UX Sprint: 3 Fixes Shipped (6958255)
 
