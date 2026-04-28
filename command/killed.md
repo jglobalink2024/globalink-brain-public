@@ -1,5 +1,34 @@
 # COMMAND — Killed Items Register
-Last updated: 260420
+Last updated: 260428
+
+## CURSOR_BRIEF — DEAD
+Killed: 260412
+Reason: CLAUDE.md at command-app/command-app/CLAUDE.md is
+  auto-read by CC at session start. CURSOR_BRIEF is redundant.
+Replaced by: CLAUDE.md auto-read
+Revive condition: Never
+
+## FOUNDING99 Coupon — DEAD
+Killed: 260413
+Reason: 0 redemptions. Abandoned before any use.
+Replaced by: FM direct Stripe link (no coupon needed)
+Revive condition: Never reference
+
+## Broad Sweep CC Prompts — DEAD
+Killed: 260413
+Reason: Large sweeping prompts cause session eating,
+  merge conflicts, and unintended file touches.
+Replaced by: Surgical single-component CC prompts with
+  explicit DELETE/REPLACE and verification steps.
+Revive condition: Never
+
+## Navattic Rebuild — DEFERRED
+Killed: 260413 (deferred, not dead)
+Reason: Currently shows landing page walkthrough, should
+  demo actual app. "Start 14-day trial" → "Start 14-day pilot"
+  fix also pending.
+Gate: After beta testing complete
+Revive condition: Post-beta — rebuild to demo real app flow
 
 ## Browser Extension for Context Injection — DEAD
 Killed: Security assessment
@@ -52,8 +81,3 @@ Reason: Maps to 5 existing prior art kills: Cognitive Stigmergy
 Biology language: Retired per SOP v8 Section 13.
 Pain story captured as discovery call ammunition.
 Revive condition: Never
-
-## Banned Language
-
-### 260420 — "circle back"
-Added to banned list after Jason edited "circle back" → "hit you back up" in Grant Carlson follow-up. Corporate verb; peer frame demands casual.
