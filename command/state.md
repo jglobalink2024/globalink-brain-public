@@ -48,6 +48,17 @@ CLI injection reported to Vercel
 
 ## Session Log
 
+### 260428 — Brain catchup push + RAP-B SessionStart hook
+Session: [GL/COMMAND | BRAIN OPS | Brain Catchup · RAP-B Pre-Scan Hook | 260428]
+- Full brain catchup 260413→260428: 7 files replaced (commit 88083e7) — command/{state,decisions,patterns,killed,research}.md + gl/{principles,decisions}.md
+- Public mirror sync verified live; sync-public.yml workflow inspected (blocklist rsync approach, gl/entities.md excluded — correct)
+- Rule 10 root cause diagnosed (Opus): RAP-B header is emitted before tool calls can fire, so declaration precedes scan. Sequencing bug, not knowledge gap. Documentation fixes don't survive — format must change.
+- Structural fix shipped: SessionStart hook ~/.claude/hooks/rap-b-prescan.js auto-injects 156-agent categorized inventory via hookSpecificOutput.additionalContext at session start
+- settings.json updated: new SessionStart hook + existing PreToolUse (git preflight) and UserPromptSubmit (oracle-preflight stub) preserved
+- feedback_rap_enforcement.md updated with sequencing-bug root cause + new application rule
+- ACTIVATION: requires `/hooks` reload OR fresh session — current session can't fire SessionStart
+- VERIFICATION TEST: in next session ask "what agents are available?" — if categorized list recited without running ls, hook works; if scan needed, escalate to UserPromptSubmit (populate oracle-preflight.sh stub)
+
 ### 260428 — Layer 1 Brain Freshness Gate deployed
 Session: [GL/COMMAND | BRAIN OPS | Layer 1 Freshness Gate · POINTER_COMMAND v2 | 260428]
 - POINTER_COMMAND.md overwritten with v2 (84 ins / 19 del)
