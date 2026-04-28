@@ -1,6 +1,49 @@
 # COMMAND — Current State
 Last updated: 260428
 
+## 260428 — Daily Ops Run · Fix Execution
+
+Session: [GL/COMMAND | OPS | Daily Ops Run · Fix Execution | 260428]
+
+### What changed this session
+
+**Ops-watchdog daily run executed (2026-04-28) — YELLOW health**
+- Full diagnostic completed against production (Supabase ycxaohezeoiyrvuhlzsk, Vercel, live canary)
+- Overall: **YELLOW** — canary GREEN (176ms warm, new two-probe methodology confirmed), no criticals
+- New event type detected: `agent_poll` — 1986 events/24h, first observed today
+  - Drove +2.85 MB DB spike (22× normal daily growth rate of 0.13 MB)
+  - At current rate: ~147 days to 450 MB free-tier critical threshold
+  - Baseline patched by parallel 11:05 run (commit `c3acbbd`) — added `agent_poll`, `dev_action`, `/api/integrations/vendor-disconnect`
+- Expired trial (ws_7464e500): resolved — converted to `solo` plan between check and fix
+- Brain queue: empty
+
+**vercel.json warmup cron timing fixed (commit `8200f9e`)**
+- Changed `"0 11 * * *"` (11:00 UTC) → `"4 11 * * *"` (11:04 UTC)
+- Root cause: cron was firing 5 minutes before the 11:05 UTC ops check; edge functions go cold in seconds, not minutes; now fires 1 minute before for maximum warm-state window
+- Updated stale comment in `app/api/internal/warmup/route.ts` to match
+- TypeScript clean + preflight passed
+
+**YELLOW alert sent: 200 OK**
+- OPS_ALERT_SECRET confirmed present in .env.local (64 chars)
+- Alert payload delivered — agent_poll flood + DB spike + event type patches summarized
+
+**Run logs produced:**
+- `docs/ops/2026-04-21-11-05.md` — April 21 diagnostic data (committed `898e64b`, data correctly reflects April 21 state from queued task)
+- `docs/ops/2026-04-28-04-40.md` — April 28 on-demand fix run log (committed `8200f9e`)
+- `docs/ops/2026-04-28-11-05.md` — April 28 scheduled 11:05 run (committed `c3acbbd` by parallel session)
+
+### What's next
+- Monitor `agent_poll` volume over next 3 daily runs; if sustained >1000/day → scope audit_ledger retention job
+- SP-260427-01 (Vercel runtime-logs endpoint format) still open — low priority
+- PENDING_ACTIONS: check if any rows need attention post this run
+
+### Known open items (carry-forward)
+- HEARTH + PL brain propagation still blocked pending PL product repo confirmation
+- CI action upgrade: `actions/checkout@v4` → Node.js 24 compatible (deadline: 260602)
+- Vercel runtime-logs API endpoint shape unknown (SP-260427-01)
+
+---
+
 ## 260428 — Brain Staleness Investigation · Public Mirror Unarchived
 
 Session: [GL/BRAIN | OPS | Staleness Investigation · Public Mirror Fix | 260428]
