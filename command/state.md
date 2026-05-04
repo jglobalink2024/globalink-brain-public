@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260428
+Last updated: 260503
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -47,6 +47,17 @@ Migration log updated
 CLI injection reported to Vercel
 
 ## Session Log
+
+### 260503 — Brain Hardening #3 — ntfy.sh second alert channel
+Session: [GL/COMMAND | OPS | Brain Hardening · ntfy.sh Alert Channel | 260503]
+- F2 + F8b closed: ntfy.sh added as fully independent second alert channel alongside Brevo
+- NTFY_TOPIC secret added to globalink-brain GitHub repo (long random topic, unguessable)
+- sync-public.yml: existing step renamed "Notify on failure (Brevo email)"; new parallel step "Notify on failure (ntfy.sh push)" added with `if: failure()`, Priority: urgent
+- brain-heartbeat.yml: ntfy curl added inside `AGE_HOURS > 48` branch before `exit 1`, Priority: high
+- Both channels verified independent: different API, different secret, different transport
+- Live test: injected `exit 1` as first step → run 25297494565 failed → Brevo messageId <202605040203.16871763278@smtp-relay.mailin.fr> + ntfy id YaeDaKZglqcm both confirmed HTTP 200
+- Revert confirmed: run 25297521970 succeeded — workflow back to production state
+- Jason manual step remaining: install ntfy app + subscribe to topic gl-brain-ops-25a9465b49b52d152e14aa5d0f071c5e
 
 ### 260428 — Layer 3.5 Config Version Control + POINTER v3 deploy
 Session: [GL/COMMAND | OPS | POINTER v3 Deploy · Config Backup Repo | 260428]
