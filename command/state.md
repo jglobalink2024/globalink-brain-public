@@ -79,6 +79,18 @@ Session: [GL/COMMAND | INFRA | Documenso Deploy · Render Turbo Fix | 260504]
 - Schema sync manual going forward; current schema confirmed in sync
 - documenso-operator.md agent skill written to ~/.claude/agents/
 
+### 260504 — Documenso Signing Cert · Env Vars Saved
+[PERSISTENT]
+Last updated: 260504
+Author: CC
+Session: [GL/COMMAND | INFRA | Documenso Deploy · Signing Cert | 260504]
+- NEXT_PRIVATE_SIGNING_TRANSPORT=local and NEXT_PRIVATE_SIGNING_LOCAL_FILE_CONTENTS (RSA 2048, 10yr, CN=documenso-gl, base64 PEM, 3772 chars) saved to Render env vars for documenso-gl service
+- All other required vars confirmed pre-existing: NEXTAUTH_SECRET, NEXT_PRIVATE_ENCRYPTION_KEY, NEXT_PRIVATE_ENCRYPTION_SECONDARY_KEY, SMTP stack (NEXT_PRIVATE_SMTP_*)
+- Deploy deploy-r2pg triggered — rebuilding with full signing cert in place
+- PENDING_ACTIONS.md: GITHUB unarchive row marked [x] (confirmed push ee63dd5..c0854be); VERCEL env vars row marked [x] (signing vars saved)
+- Documenso admin first-time setup: site live at /signin, standard auth flow — Jason must sign up/sign in to create admin account and generate API token
+- Next: verify deploy-r2pg lands clean → sign in → generate API token → upload NDA template
+
 ### 260504 — Documenso NDA Template Fields + Test Send
 [PERSISTENT]
 Last updated: 260504
