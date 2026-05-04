@@ -1,5 +1,5 @@
 # COMMAND — Current State
-Last updated: 260503
+Last updated: 260504
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -47,6 +47,19 @@ Migration log updated
 CLI injection reported to Vercel
 
 ## Session Log
+
+### 260504 — P1 #4 MCP SQL Migrations + APPSMOKE-06 Fix
+[PERSISTENT]
+Last updated: 260504
+Author: CC
+Session: [GL/COMMAND | BUILD | MCP SQL Migrations · APPSMOKE-06 Fix | 260504]
+- P1 #4 MCP SQL Migrations shipped to production Supabase (ycxaohezeoiyrvuhlzsk)
+- Three columns added: mcp_secret TEXT NOT NULL (entropy default) on workspaces; mcp_endpoint_url TEXT nullable and capabilities JSONB nullable on agents
+- JSONB column type change required DROP + recreate of agents_safe view
+- lib/supabase/types.ts regenerated via Supabase MCP
+- tsc: exit 2 → exit 0 after fixing type debt in 5 files (CheckpointRow, Checkpoint interface, command-data.ts, ledger.ts entry_seq, dev/reset dynamic table cast)
+- APPSMOKE-06 fixed: /GlobalInk/i case-insensitive flag falsely matched correct footer text "GlobaLink LLC" (both fold to "globalink"). Fix: dropped "i" flag → case-sensitive
+- Committed c7e6de3, pushed to main
 
 ### 260503 — Brain Hardening #3 — ntfy.sh second alert channel
 Session: [GL/COMMAND | OPS | Brain Hardening · ntfy.sh Alert Channel | 260503]
@@ -109,11 +122,6 @@ Session: [GL/COMMAND | BRAIN OPS | Layer 1 Freshness Gate · POINTER_COMMAND v2 
 - High: API keys written client-side (must route server-side)
 
 ## Pending Manual Steps
-
-### Supabase SQL Editor (apply after 260413 migrations):
-- mcp_secret column on workspaces table
-- mcp_endpoint_url column on agents table
-- capabilities column on agents table
 
 ### Vercel Env Vars Needed:
 STRIPE_FM_PRICE_ID
