@@ -48,6 +48,18 @@ CLI injection reported to Vercel
 
 ## Session Log
 
+### 260504 — Documenso NDA Template Fields + Test Send
+[PERSISTENT]
+Last updated: 260504
+Author: CC
+Session: [GL/COMMAND | OPS | Documenso NDA Template Fields · Test Send | 260504]
+- Added 5 fields to Documenso template 12572 (COMMAND Beta NDA v2.0), page 4, Participant right column
+- Fields: SIGNATURE(id:10520397,y:12.5), NAME(id:10520396,y:15.8,required:true), TEXT Company/Org(id:10520398,y:18.6,required:true), TEXT Title/Role(id:10520399,y:21.4), DATE(id:10520400,y:24.2)
+- All mapped to recipient 2114590 (recipient.1@documenso.com, SIGNER)
+- Discovery: tRPC proc=field.setFieldsForTemplate; auth header x-team-id:178745; envelopeItemId=envelope_item_lfevxkkomiolhlal (templateDocumentData)
+- Test invite sent: doc 1260791 to jcameron5206@proton.me — signing URL https://app.documenso.com/sign/fKrJUdfR5ieBqkBtcHK4g — Full Name + Signature confirmed visible in signing UI
+- PENDING_ACTIONS.md Documenso row marked [x]
+
 ### 260504 — P1 #4 MCP SQL Migrations + APPSMOKE-06 Fix
 [PERSISTENT]
 Last updated: 260504
