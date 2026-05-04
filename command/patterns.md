@@ -133,6 +133,15 @@ If mirror goes stale >48hrs: check Action run logs for failures.
 Node.js 20 deprecation: fix Action before Jun 2 2026.
 Add on-failure Brevo alert to catch silent failures early.
 
+## Render + Hono monorepo: CWD matters for static assets (260504)
+[PERSISTENT]
+Last updated: 260504
+Author: CC
+
+When deploying a Hono server from a monorepo to Render, the server's CWD at startup determines where `serveStatic({ root: 'build/client' })` resolves.
+Fix: prefix the start command with `cd <app-dir> &&` so CWD = the app directory, not the monorepo root.
+Example: `cd apps/remix && node build/server/main.js` (not `node apps/remix/build/server/main.js`).
+
 ## Content system pattern (260418)
 Batch + schedule + template + Claude co-write + byproduct capture.
 No daily creation. No blank-page drafting. System compliance

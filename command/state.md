@@ -1,5 +1,7 @@
+[PERSISTENT]
 # COMMAND — Current State
 Last updated: 260504
+Author: CC
 
 ## Live URLs
 App: app.command.globalinkservices.io
@@ -10,6 +12,7 @@ NDA: go.command.globalinkservices.io/betaNDA
 Demo: go.command.globalinkservices.io/demo (Navattic)
 Stripe FM: https://buy.stripe.com/9B68wRgwAcp8dt2dJp9k407
 Stripe Pro: https://buy.stripe.com/bJe00lfsw74O74E5cT9k408
+Documenso: https://documenso-gl.onrender.com
 
 ## Build State
 Phase 1 + 1.5: COMPLETE
@@ -39,6 +42,21 @@ MCP Host MVP (commit 2e2924a):
   Settings > Integrations MCP panel
   Violet [MCP] badge on agent cards
 
+## Documenso — LIVE 260504
+URL: https://documenso-gl.onrender.com
+Render service: srv-d7b9i69r0fns73fgsgu0
+Last deploy: dep-d7s8n228qa3s73e09hdg — LIVE as of 2026-05-04 08:06 EDT
+Start command (LOCKED): `cd apps/remix && node build/server/main.js`
+  Root cause of prior failures: Turbo `persistent: true` tasks silently no-op in non-TTY (Render CI)
+  CWD prefix also fixes Hono serveStatic path (looks for build/client relative to CWD)
+Pre-Deploy Command: paid Render feature — NOT available on free tier
+  Schema sync must be done manually in Supabase SQL Editor when Prisma schema changes
+  Current schema is in sync — no action needed unless Documenso schema changes
+Supabase: project ycxaohezeoiyrvuhlzsk, schema `documenso`, all Prisma tables in sync
+pg_trgm extension: moved to `documenso` schema (already done)
+Static assets: working (fixed by `cd apps/remix &&` CWD prefix)
+Skill document: ~/.claude/agents/documenso-operator.md
+
 ## Infra Audit 260416 — COMPLETE
 40 migrations applied
 7 env vars confirmed
@@ -47,6 +65,19 @@ Migration log updated
 CLI injection reported to Vercel
 
 ## Session Log
+
+### 260504 — Documenso Deploy · Render Turbo Fix
+[PERSISTENT]
+Last updated: 260504
+Author: CC
+Session: [GL/COMMAND | INFRA | Documenso Deploy · Render Turbo Fix | 260504]
+- Documenso v2.8.1 now LIVE at https://documenso-gl.onrender.com
+- Root cause resolved: `turbo run start --filter=@documenso/remix` silently no-ops in Render CI (non-TTY, persistent:true tasks)
+- Fix: Start command changed to `cd apps/remix && node build/server/main.js` — bypasses Turbo entirely
+- CWD prefix also fixes Hono serveStatic static asset resolution (build/client relative to app dir)
+- Pre-Deploy Command (prisma db push) confirmed paid-tier Render feature — not available on free tier
+- Schema sync manual going forward; current schema confirmed in sync
+- documenso-operator.md agent skill written to ~/.claude/agents/
 
 ### 260504 — Documenso NDA Template Fields + Test Send
 [PERSISTENT]

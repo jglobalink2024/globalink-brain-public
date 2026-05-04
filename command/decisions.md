@@ -144,6 +144,24 @@ Rationale: Cold outreach yields 3-5 conversations/6wks — research
 Cancel trigger: End of June; if zero discovery calls + zero
   usable buyer-language quotes harvested, cancel Waalaxy.
 
+## 260504 — Documenso start command: bypass Turbo entirely
+[PERSISTENT]
+Last updated: 260504
+Author: CC
+
+Decision: Use `cd apps/remix && node build/server/main.js` not `turbo run start --filter=@documenso/remix`.
+Root cause: Turbo `persistent: true` tasks silently no-op in non-TTY environments (Render CI).
+The `cd apps/remix &&` prefix also fixes the Hono `serveStatic` path (looks for `build/client` relative to CWD).
+
+## 260504 — Render Pre-Deploy Command is a paid feature
+[PERSISTENT]
+Last updated: 260504
+Author: CC
+
+Decision: Cannot set `prisma db push` as a pre-deploy step on Render free tier (locked behind paywall).
+Schema sync must be done manually in Supabase SQL Editor when Prisma schema changes.
+Current schema is in sync — no action needed unless Documenso schema changes.
+
 ## 260418 — Pricing model: Flat + caps + overages (hybrid)
 Decision: Reject pure usage. Keep flat as primary. Add task caps
   per tier with overage upsell to next tier. Introduce $29
