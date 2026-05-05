@@ -66,6 +66,18 @@ CLI injection reported to Vercel
 
 ## Session Log
 
+### 260505 — Integrity Rebless · Closeout Version Fix
+[PERSISTENT]
+Last updated: 260505
+Author: CC
+Session: [GL/COMMAND | BRAIN-OPS | Integrity Rebless · Closeout Version Fix | 260505]
+- Session-start integrity flag (C:\dev\gl-brain): already resolved by prior sessions (5f03a02 + 58afd0c) — no action needed
+- globalink-brain integrity.md reblessed (7815eba): state_hash corrected f176949→2a97cfd after 5bfb130 write that skipped integrity update
+- Closeout BRAIN_COMMITTER_EXPECTED_VERSION: v1.0→v1.2 in ~/bin/closeout — eliminates WARN that fired every clean run
+- globalink-claude-config/bin/closeout: committed (2d0b531, pushed) — L3.5 backup now current with v2.1 + version bump
+- PR #504 (msitarzewski/agency-agents add/brain-committer): confirmed OPEN, branch current at d467f78
+- Diagnostic: two separate brain repos confirmed (C:\dev\gl-brain = hook/closeout target; globalink-brain = CC write target); sync gap documented in 260505 ACT-2 entry; consolidation deferred
+
 ### 260505 — ACT-2 Verify · Brain Rebless Needed
 [PERSISTENT]
 Last updated: 260505
