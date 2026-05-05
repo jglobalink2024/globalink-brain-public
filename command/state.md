@@ -1,6 +1,6 @@
 [PERSISTENT]
 # COMMAND — Current State
-Last updated: 260504
+Last updated: 260505
 Author: CC
 
 ## Live URLs
@@ -65,6 +65,17 @@ Migration log updated
 CLI injection reported to Vercel
 
 ## Session Log
+
+### 260505 — ACT-2 Verify · Brain Rebless Needed
+[PERSISTENT]
+Last updated: 260505
+Author: CC
+Session: [GL/COMMAND | OPS | ACT-2 Verify · Brain Rebless | 260505]
+- ACT-2 verified: gap-flagger 2605 schema mismatch decision was already logged in gl-brain/command/decisions.md (prior CC session 260505) — no new write needed
+- Schema mismatch decision covers: `activated`/`date`/`outcome` accepted as aliases; SKILL.md to be updated before 2606 review; append-only principle preserved
+- Hash drift on state.md + decisions.md flagged at session start — cause is prior session's writes; bless hashes stale
+- Rec: `brain-committer --rebless` to clear drift before next substantive brain write
+- Note: gl-brain (C:\dev\) and globalink-brain (GlobalInk Repos) are separate repos — decisions.md schema entry is in gl-brain only; sync may be needed
 
 ### 260504 — Documenso Deploy · Render Turbo Fix
 [PERSISTENT]
